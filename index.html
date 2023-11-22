@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Victor Mario Noble Ramos, MSc.">
 
-<title>Inicialización del simplex</title>
+<title>Investigación de Operaciones</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,77 +24,41 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="20231116 Inicializacion del Simplex_files/libs/clipboard/clipboard.min.js"></script>
-<script src="20231116 Inicializacion del Simplex_files/libs/quarto-html/quarto.js"></script>
-<script src="20231116 Inicializacion del Simplex_files/libs/quarto-html/popper.min.js"></script>
-<script src="20231116 Inicializacion del Simplex_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="20231116 Inicializacion del Simplex_files/libs/quarto-html/anchor.min.js"></script>
-<link href="20231116 Inicializacion del Simplex_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="20231116 Inicializacion del Simplex_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="20231116 Inicializacion del Simplex_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="20231116 Inicializacion del Simplex_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="20231116 Inicializacion del Simplex_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-<script src="20231116 Inicializacion del Simplex_files/libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="20231116 Inicializacion del Simplex_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="sty.css">
 </head>
 
-<body>
+<body class="fullcontent">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#motivaciones" id="toc-motivaciones" class="nav-link active" data-scroll-target="#motivaciones"><span class="header-section-number">1</span> Motivaciones</a>
-  <ul class="collapse">
-  <li><a href="#la-partición-trivial" id="toc-la-partición-trivial" class="nav-link" data-scroll-target="#la-partición-trivial"><span class="header-section-number">1.1</span> La partición trivial</a>
-  <ul class="collapse">
-  <li><a href="#ejemplo" id="toc-ejemplo" class="nav-link" data-scroll-target="#ejemplo"><span class="header-section-number">1.1.1</span> Ejemplo</a></li>
-  <li><a href="#no-todo-es-color-de-rosa-las-particiones-triviales-son-atípicas" id="toc-no-todo-es-color-de-rosa-las-particiones-triviales-son-atípicas" class="nav-link" data-scroll-target="#no-todo-es-color-de-rosa-las-particiones-triviales-son-atípicas"><span class="header-section-number">1.1.2</span> No todo es color de rosa: las particiones triviales son atípicas</a></li>
-  <li><a href="#ejemplo-2" id="toc-ejemplo-2" class="nav-link" data-scroll-target="#ejemplo-2"><span class="header-section-number">1.1.3</span> Ejemplo 2</a></li>
-  </ul></li>
-  <li><a href="#las-soluciones-a-esta-dificultad" id="toc-las-soluciones-a-esta-dificultad" class="nav-link" data-scroll-target="#las-soluciones-a-esta-dificultad"><span class="header-section-number">1.2</span> Las soluciones a esta dificultad</a></li>
-  </ul></li>
-  <li><a href="#método-de-las-2-fases" id="toc-método-de-las-2-fases" class="nav-link" data-scroll-target="#método-de-las-2-fases"><span class="header-section-number">2</span> Método de las 2 fases</a>
-  <ul class="collapse">
-  <li><a href="#esquema-general-del-método" id="toc-esquema-general-del-método" class="nav-link" data-scroll-target="#esquema-general-del-método"><span class="header-section-number">2.1</span> Esquema general del método</a></li>
-  <li><a href="#sec-ejemplo" id="toc-sec-ejemplo" class="nav-link" data-scroll-target="#sec-ejemplo"><span class="header-section-number">2.2</span> Ejemplo de aplicación</a>
-  <ul class="collapse">
-  <li><a href="#fase-1" id="toc-fase-1" class="nav-link" data-scroll-target="#fase-1"><span class="header-section-number">2.2.1</span> Fase 1</a></li>
-  <li><a href="#fase-2" id="toc-fase-2" class="nav-link" data-scroll-target="#fase-2"><span class="header-section-number">2.2.2</span> Fase 2</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#método-de-la-gran-m" id="toc-método-de-la-gran-m" class="nav-link" data-scroll-target="#método-de-la-gran-m"><span class="header-section-number">3</span> Método de la gran M</a>
-  <ul class="collapse">
-  <li><a href="#esquema-general-del-método-1" id="toc-esquema-general-del-método-1" class="nav-link" data-scroll-target="#esquema-general-del-método-1"><span class="header-section-number">3.1</span> Esquema general del método</a></li>
-  <li><a href="#ejemplo-de-aplicación" id="toc-ejemplo-de-aplicación" class="nav-link" data-scroll-target="#ejemplo-de-aplicación"><span class="header-section-number">3.2</span> Ejemplo de aplicación</a></li>
-  </ul></li>
-  <li><a href="#ejercicios-y-lecturas-complementarias." id="toc-ejercicios-y-lecturas-complementarias." class="nav-link" data-scroll-target="#ejercicios-y-lecturas-complementarias."><span class="header-section-number">4</span> Ejercicios y lecturas complementarias.</a>
-  <ul class="collapse">
-  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">4.1</span> Ejercicios</a></li>
-  <li><a href="#lecturas-complementarias" id="toc-lecturas-complementarias" class="nav-link" data-scroll-target="#lecturas-complementarias"><span class="header-section-number">4.2</span> Lecturas complementarias</a></li>
-  </ul></li>
-  </ul>
-</nav>
-</div>
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Inicialización del simplex</h1>
+<h1 class="title">Investigación de Operaciones</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Victor Mario Noble Ramos, MSc. </p>
+          </div>
+  </div>
     
   
     
@@ -102,638 +67,24 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="motivaciones" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Motivaciones</h1>
-<section id="la-partición-trivial" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="la-partición-trivial"><span class="header-section-number">1.1</span> La partición trivial</h2>
-<p>En los problemas lineales, para poder inicializar el método simplex necesitamos de una solución básica factible inicial, esto es una base <span class="math inline">\(\mathcal{B}\)</span> tal que <span class="math inline">\(x_{\mathcal{B}} \ge0\)</span>.</p>
-<p>En problemas con todas las restricciones de tipo <span class="math inline">\(\le\)</span> y con el vector de recursos <span class="math inline">\(b\ge0\)</span>, se garantiza una solución básica inicial factible, ya que al agregar las variables para estandarizar las restricciones, todas las variables son de holgura.</p>
-<section id="ejemplo" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="ejemplo"><span class="header-section-number">1.1.1</span> Ejemplo</h3>
-<div class="columns v-center-container">
-<div class="column" style="width:&quot;40%;">
-<p><strong>Modelo sin estandarizar:</strong> <span class="math display">\[\min z = c_1x_1+c_2x_2 + \ldots + c_nx_n\]</span> S. a:</p>
-<p><span class="math display">\[\begin{matrix}a_{11}x_1 &amp; + &amp; a_{12}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{1n}x_n &amp; \le &amp; b_1 \\
-                a_{21}x_1 &amp; + &amp; a_{22}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{2n}x_n &amp; \le &amp; b_2 \\
-                \vdots &amp; + &amp; \vdots  &amp; + &amp; \ddots &amp; + &amp; \vdots &amp; \le &amp; \vdots \\
-                a_{m1}x_1 &amp; + &amp; a_{m2}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{mn}x_n &amp; \le &amp; b_m \end{matrix}\]</span></p>
-</div><div class="column" style="width:10%;">
-<p><span class="math inline">\(\implies\)</span></p>
-</div><div class="column" style="width:45%;">
-<p><strong>Modelo estandarizado:</strong> <span class="math display">\[\min z = c_1x_1+c_2x_2 + \ldots + c_nx_n + 0x_{n+1}^s + 0x_{n+2}^s + \ldots + 0x_{n+m}^s\]</span> S. a:</p>
-<p><span class="math display">\[\begin{matrix}a_{11}x_1 &amp; + &amp; a_{12}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{1n}x_n &amp; &amp; + x_{n+1}^s &amp; &amp; &amp;  &amp; = &amp; b_1 \\ a_{21}x_1 &amp; + &amp; a_{22}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{2n}x_n &amp; &amp; &amp; + x_{n+2}^s &amp; &amp; &amp; = &amp; b_2 \\ \vdots &amp; + &amp; \vdots  &amp; + &amp; \ddots &amp; + &amp; \vdots &amp;  &amp;  &amp; &amp; + \ddots &amp; &amp; = &amp; \vdots \\ a_{m1}x_1 &amp; + &amp; a_{m2}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{mn}x_n &amp; &amp; &amp; &amp; &amp; +x_{n+m}^s &amp; = &amp; b_m \end{matrix}\]</span></p>
-</div>
-</div>
-<p>La partición <span class="math inline">\(\mathcal{B} = \{n+1, n+2, \ldots, n+m\}\)</span>, <span class="math inline">\(\mathcal{N} = \{1, 2, \ldots, n\}\)</span>, la cual llamaremos <strong>partición trivial</strong>, da las siguientes matrices:</p>
-<p><span class="math display">\[B= \begin{bmatrix}1     &amp; 0      &amp; \ldots &amp; 0 \\
-                    0     &amp; 1      &amp; \ldots &amp; 0 \\
-                   \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-                   0      &amp; 0      &amp; \ldots &amp; 1 \end{bmatrix},
-  N = \begin{bmatrix}a_{11} &amp; a_{12} &amp; \ldots &amp; a_{1n}\\
-                   a_{21} &amp; a_{22} &amp; \ldots &amp; a_{2n}  \\
-                   \vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
-                   a_{m1} &amp; a_{m2} &amp; \ldots &amp; a_{mn}\end{bmatrix}\]</span></p>
-<p>Note que <span class="math inline">\(B = I\)</span>. Esta es la principal característica de la <em>partición trivial</em>, da como resultado una matriz básica que es la <strong>identidad</strong>. Por propiedades de la inversa, <span class="math inline">\(I^{-1} = I\)</span>, es decir que <span class="math inline">\(B^{-1} = I\)</span> también. Por lo tanto, considerando un <span class="math inline">\(b\ge0\)</span>, la partición trivial garantiza una solución básica factible inicial, ya que: <span class="math display">\[x_{\mathcal{B}} = B^{-1}b = b \ge 0\]</span></p>
-<p>Lo cual es una solución básica factible inicial y se puede iniciar el algoritmo del simplex para resolver el problema.</p>
+<section id="micrositio-investigación-de-operaciones" class="level1">
+<h1>Micrositio Investigación de Operaciones</h1>
+<p>Bienvenidos a este micrositio, en el que iré publicando material sobre el curso de <strong>Programación Lineal</strong> y otros tópicos de la Investigación de Operaciones.</p>
 </section>
-<section id="no-todo-es-color-de-rosa-las-particiones-triviales-son-atípicas" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="no-todo-es-color-de-rosa-las-particiones-triviales-son-atípicas"><span class="header-section-number">1.1.2</span> No todo es color de rosa: las particiones triviales son atípicas</h3>
-<p>Sin embargo, no siempre se puede conseguir una partición trivial. Por ejemplo, si hay restricciones de tipo o de tipo <span class="math inline">\(\ge\)</span> se añaden variables de exceso, que tendrán coeficientes negativos en la matriz tecnológica. Similar caso ocurre si hay restricciones de tipo <span class="math inline">\(=\)</span>, en las cuales, no se añaden ni variables de holgura ni de exceso.</p>
+<section id="tópicos-de-interés" class="level1">
+<h1>Tópicos de interés</h1>
+<p><a href="6._Simplex_initialization\20231116_Inicializacion_del_Simplex.html">➡️ Inicialización del simplex</a></p>
+<p><a href="7._Duality_and_sensitivity/7_duality_sensitivity.html">➡️ Dualidad y análisis de sensibilida</a></p>
+<!-- <a href="subdir/thefile.html">my link</a> -->
 </section>
-<section id="ejemplo-2" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" class="anchored" data-anchor-id="ejemplo-2"><span class="header-section-number">1.1.3</span> Ejemplo 2</h3>
-<p>Observe el ejemplo anterior pero con la segunda restricción siendo de tipo <span class="math inline">\(\ge\)</span>:</p>
-<div class="columns v-center-container">
-<div class="column" style="width:&quot;40%;">
-<p><strong>Modelo sin estandarizar:</strong> <span class="math display">\[\min z = c_1x_1+c_2x_2 + \ldots + c_nx_n\]</span> S. a:</p>
-<p><span class="math display">\[\begin{matrix}a_{11}x_1 &amp; + &amp; a_{12}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{1n}x_n &amp; \le &amp; b_1 \\
-                a_{21}x_1 &amp; + &amp; a_{22}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{2n}x_n &amp; \ge &amp; b_2 \\
-                \vdots &amp; + &amp; \vdots  &amp; + &amp; \ddots &amp; + &amp; \vdots &amp; \le &amp; \vdots \\
-                a_{m1}x_1 &amp; + &amp; a_{m2}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{mn}x_n &amp; \le &amp; b_m \end{matrix}\]</span></p>
-</div><div class="column" style="width:10%;">
-<p><span class="math inline">\(\implies\)</span></p>
-</div><div class="column" style="width:45%;">
-<p><strong>Modelo estandarizado:</strong> <span class="math display">\[\min z = c_1x_1+c_2x_2 + \ldots + c_nx_n + 0x_{n+1}^s + 0x_{n+2}^s + \ldots + 0x_{n+m}^s\]</span> S. a:</p>
-<p><span class="math display">\[\begin{matrix}a_{11}x_1 &amp; + &amp; a_{12}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{1n}x_n &amp; + x_{n+1}^s &amp;            &amp;        &amp;            &amp; = &amp; b_1 \\
-                a_{21}x_1 &amp; + &amp; a_{22}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{2n}x_n &amp;             &amp; -x_{n+2}^s &amp;        &amp;            &amp; = &amp; b_2 \\
-                \vdots    &amp; + &amp; \vdots     &amp; + &amp; \ddots &amp; + &amp; \vdots    &amp;             &amp;            &amp; \ddots &amp;            &amp; = &amp; \vdots \\
-                a_{m1}x_1 &amp; + &amp; a_{m2}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{mn}x_n &amp;             &amp;            &amp;        &amp; +x_{n+m}^s &amp; = &amp; b_m \end{matrix}\]</span></p>
-</div>
-</div>
-<p>La partición <span class="math inline">\(\mathcal{B} = \{n+1, n+2, \ldots, n+m\}\)</span>, <span class="math inline">\(\mathcal{N} = \{1, 2, \ldots, n\}\)</span>, la cual llamaremos <strong>partición trivial</strong>, da las siguientes matrices:</p>
-<p><span class="math display">\[B= \begin{bmatrix}1     &amp; 0      &amp; \ldots &amp; 0 \\
-                    0     &amp; -1      &amp; \ldots &amp; 0 \\
-                   \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-                   0      &amp; 0      &amp; \ldots &amp; 1 \end{bmatrix},
-  N = \begin{bmatrix}a_{11} &amp; a_{12} &amp; \ldots &amp; a_{1n}\\
-                   a_{21} &amp; a_{22} &amp; \ldots &amp; a_{2n}  \\
-                   \vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
-                   a_{m1} &amp; a_{m2} &amp; \ldots &amp; a_{mn}\end{bmatrix}\]</span></p>
-<p>Note que ahora <span class="math inline">\(B\neq I\)</span>, y su inversa resulta en: <span class="math display">\[B^{-1} = \begin{bmatrix}1     &amp; 0      &amp; \ldots &amp; 0 \\
-                    0     &amp; -1      &amp; \ldots &amp; 0 \\
-                   \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-                   0      &amp; 0      &amp; \ldots &amp; 1 \end{bmatrix}\]</span></p>
-<p>Para obtener la solución básica, hacemos:</p>
-<p><span class="math display">\[x_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}1     &amp; 0      &amp; \ldots &amp; 0 \\
-                    0     &amp; -1      &amp; \ldots &amp; 0 \\
-                   \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-                   0      &amp; 0      &amp; \ldots &amp; 1 \end{bmatrix}\cdot \begin{bmatrix}b_1 \\ b_2 \\ \vdots \\
-                   b_m \end{bmatrix} =\begin{bmatrix} b_1 \\ \textcolor{red}{-b_2} \\ \vdots \\ b_m \end{bmatrix} \]</span> Observe que debido a la componente <span class="math inline">\(\textcolor{red}{-b_1}\)</span>, <span class="math inline">\(x_{\mathcal{B}} \ngeq 0\)</span>. Por lo tanto no podríamos inicializar el método simplex.</p>
-</section>
-</section>
-<section id="las-soluciones-a-esta-dificultad" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="las-soluciones-a-esta-dificultad"><span class="header-section-number">1.2</span> Las soluciones a esta dificultad</h2>
-<p>Para solucionar la dificultad de encontrar una partición básica factible inicial, se pueden varias vías:</p>
-<p><strong>1.</strong> Buscar otra partición dentro del problema existente.</p>
-<p><strong>2.</strong> Adicionar <strong>variables ficticias o artificiales</strong> para producir una base que desemboque en <span class="math inline">\(B = I\)</span>.</p>
-<p>La primera de las soluciones es problemática por que si bien podríamos hacer esa búsqueda de forma heurística. En el peor de los casos, el gasto computacional de hacerlo podría ser prohibitivo. Por ejemplo, en un problema de 40 variables y 15 restricciones, en el peor caso habría que probar <span class="math inline">\(40C15\)</span> posibles bases. Esto equivale a más de 40mil millones de bases diferentes.</p>
-<p>La solución 2 se vuelve más atractiva. Pero estas nuevas variables serán apenas un auxilio en la consecusión de una base factible inicial para el problema original. Por lo tanto ellas deben ser eliminadas una vez conseguido este objetivo.</p>
-<p>Para lograrlo hay dos formas bien conocidas y documentadas en la literatura:</p>
-<p><strong>2.1.</strong> El método de las 2 fases.</p>
-<p><strong>2.2.</strong> El método de la gran M.</p>
-<p>En ambos métodos se adicionan unas variables nuevas llamadas variables artificiales, que se eliminarán posteriormente durante el desarrollo del método.</p>
-</section>
-</section>
-<section id="método-de-las-2-fases" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Método de las 2 fases</h1>
-<p>Este método consiste en crear un problema auxiliar (<strong>Fase 1</strong>) con las nuevas variables artificiales añadidas. La función objetivo de este problema auxiliar será la minimización (y por tanto, la eliminación) de esas variables artificiales nuevas.</p>
-<p>En seguida, se resolverá el problema auxiliar con el método simplex ya visto, y una vez encontremos la solución óptima, si esta existe, la base óptima encontrada servirá como base factible inicial para la siguiente fase.</p>
-<p>La <strong>Fase 2</strong> del problema consiste en recuperar el problema original y resolverlo usando como base inicial, la base óptima encontrada en la fase 1 (eliminando los índices añadidos por la adición de las variables artificiales).</p>
-<p>Con la base inicial se empieza nuevamente el simplex, y se continúan las iteraciones del simplex de forma normal hasta llegar al óptimo original del problema.</p>
-<p>Observe que si el problema de la fase 1 fuese ilimitado o infactible, entonces el problema original no puede ser resuelto y por tanto se concluye el proceso de resolución.</p>
-<section id="esquema-general-del-método" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="esquema-general-del-método"><span class="header-section-number">2.1</span> Esquema general del método</h2>
-<p><strong>Fase 1:</strong></p>
-<p>Resolver y guardar la base óptima de: <span class="math display">\[\min \sum_{i \in F} x_i^a\]</span> Sujeto a <span class="math display">\[Ax + x^a = b\]</span> <span class="math display">\[x, x^a \ge 0\]</span></p>
-<p>Siendo <span class="math inline">\(x_i^a\)</span> las variables artificiales adicionadas, <span class="math inline">\(F\)</span> el conjunto de índices de las columnas adicionadas y <span class="math inline">\(x^a\)</span> el vector de variables adicionadas al modelo.</p>
-<p><strong>Fase 2:</strong></p>
-<p>Con la base óptima resolverhasta la optimalidad: <span class="math display">\[\min  c^Tx\]</span> Sujeto a <span class="math display">\[Ax = b\]</span> <span class="math display">\[x \ge 0\]</span></p>
-</section>
-<section id="sec-ejemplo" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="sec-ejemplo"><span class="header-section-number">2.2</span> Ejemplo de aplicación</h2>
-<p>Considere el siguiente problema:</p>
-<p>Se desea fabricar un alimento a partir de dos materias primas con existencias limitadas. El silo de maíz aporta, por kg usado en la mezcla, 45% de carbohidratos y 15% de proteína. La melaza provee 20% de carbohidratos y 65% de proteína. El alimento debe tener un máximo de 40% de carbohidratos y un mínimo de 26% de proteína. Cada kg de silo cuesta $3 y cada kg de melaza cuesta $5. Al mezclarse y cocerse, el silo de maíz pierde el 270 g por kg usado, la melaza se reduce en 50 gramos por kg. Se debe producir mínimo 50kg del alimento al menor costo posible. Si se excede de los 50kg, el excedente se pierde y cuesta $6 el kg. ¿Cuánto de cada tipo de materia prima debe usarse?</p>
-<p>Este problema se puede modelar de la forma mostrada, a continuación. Sea:</p>
-<p><span class="math inline">\(x_1:=\)</span> Cantidad de kg de silo de maíz usado en la mezcla.</p>
-<p><span class="math inline">\(x_2:=\)</span> Cantidad de kg de melaza usada en la mezcla.</p>
-<p><span class="math inline">\(e:=\)</span> Cantidad de mezcla hecha de más por encima de los 50kg.</p>
-<p>Minimizar el costo total de la mezcla: <span class="math display">\[\min c_{Total} = 3x_1 + 5x_2 + 6e\]</span></p>
-<p>Sujeto a:</p>
-<p>Requisito de carbohidratos: <span class="math display">\[0.45x_1 + 0.20x_2 \le 0.4*50\]</span> Requisito de proteína: <span class="math display">\[0.15x_1 + 0.65x_2 \ge 0.26*50\]</span> La cantidad fabricada debe ser mínimo 50kg. Observe que la variable de exceso que se debe insertar en esta restricción es equivalente al sobrante <span class="math inline">\(e\)</span> (vea el modelo estandarizado). <span class="math display">\[0.77x_1 + 0.95x_2 \ge 50\]</span> Dominio: <span class="math display">\[x_1, x_2 \ge 0\]</span></p>
-<p>Luego de estandarizar este problema queda de la siguiente forma: <span class="math display">\[\min c_{Total} = 3x_1 + 5x_2 + 0x_3 +0x_4 + 6x_5\]</span></p>
-<p>Sujeto a: <span class="math display">\[0.45x_1 + 0.20x_2 + x_3 = 20 \]</span> <span class="math display">\[0.15x_1 + 0.65x_2 - x_4 = 13 \]</span> <span class="math display">\[0.77x_1 + 0.95x_2 - x_5 = 50\]</span> <span class="math display">\[x_1, x_2, x_3, x_4, x_5 \ge 0\]</span> Observe que la variable <span class="math inline">\(x_5\)</span> es el exceso de mezcla producido, para continuar con la notación y facilitar el entendimiento del lector, se sustituye a <span class="math inline">\(e\)</span> por esta variable en la FO.</p>
-<p>El problema anterior resulta en las siguientes matrices:</p>
-<p><span class="math display">\[c = \begin{bmatrix}3 \\ 5 \\ 0 \\ 0 \\6\end{bmatrix}, x = \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4\\x_5\end{bmatrix}, A = \begin{bmatrix}0.45 &amp; 0.20 &amp; 1 &amp; 0 &amp; 0\\ 0.15 &amp; 0.65 &amp;0 &amp; -1 &amp; 0\\ 0.77 &amp; 0.95 &amp; 0 &amp; 0 &amp;-1\end{bmatrix}, b = \begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix}\]</span></p>
-<p>Observe que la base trivial compuesta por las variables adicionadas al estandarizar <span class="math inline">\(\mathcal{B} = \{3,4,5\}, \mathcal{N} = \{1,2\}\)</span>, genera las matrices: <span class="math display">\[B = \begin{bmatrix}1 &amp; 0 &amp; 0\\0 &amp; -1 &amp; 0\\0 &amp; 0 &amp;-1\end{bmatrix}, N = \begin{bmatrix}0.45 &amp; 0.20\\ 0.15 &amp; 0.65 \\ 0.77 &amp; 0.95\end{bmatrix}\]</span></p>
-<p>Con <span class="math inline">\(B^1 = B = \begin{bmatrix}1 &amp; 0 &amp; 0\\0 &amp; -1 &amp; 0\\0 &amp; 0 &amp;-1\end{bmatrix}\)</span></p>
-<p>Y se produce la siguiente solución básica:</p>
-<p><span class="math display">\[x_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}1 &amp; 0 &amp; 0\\0 &amp; -1 &amp; 0\\0 &amp; 0 &amp;-1\end{bmatrix}\begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix} = \begin{bmatrix}20 \\ \textcolor{red}{-13} \\ \textcolor{red}{-50}\end{bmatrix} = \begin{bmatrix}x_3 \\ x_4 \\ x_5\end{bmatrix}\]</span></p>
-<p>Tal y como se puede ver por los valores de <span class="math inline">\(x_4\)</span> y <span class="math inline">\(x_5\)</span>, esta solución básica inicial (base <span class="math inline">\(\mathcal{B} = \{3,4,5\}, \mathcal{N} = \{1,2\}\)</span>) no es una solución factible. Por lo tanto no podríamos iniciar el método simplex para encontrar la solución del problema de la mezcla.</p>
-<p>Por esta razón , usemos el método simplex de 2 fases para encontrar, en la primera fase, una base factible inicial, y en la segunda fase, encontraremos el óptimo del problema.</p>
-<section id="fase-1" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="fase-1"><span class="header-section-number">2.2.1</span> Fase 1</h3>
-<p>Para formar la matriz identidad que necesitamos, necesitamos agregar las columnas <span class="math inline">\(\begin{bmatrix}0\\1\\0\end{bmatrix}\)</span> y <span class="math inline">\(\begin{bmatrix}0\\0\\1\end{bmatrix}\)</span>.</p>
-<p>Por este motivo asociaremos estas columnas a las <strong>nuevas variables artificiales</strong> <span class="math inline">\(x_6^a\)</span> y <span class="math inline">\(x_7^a\)</span>, respectivamente.</p>
-<p>La función objetivo para el problema auxiliar será: <span class="math display">\[\min \textcolor{blue}{z = x_6^a + x_7^a} \equiv  0x_1 + 0x_2 + 0x_3 + 0x_4 + +0x_5 + x_6^a + x_7^a\]</span> Y las restricciones modificadas (ya estandarizadas) quedan de la siguiente forma: <span class="math display">\[0.45x_1 + 0.20x_2 + x_3 + 0x_4 + 0x_5 + 0x_6^a + 0x_7^a = 20 \]</span> <span class="math display">\[0.15x_1 + 0.65x_2 + 0x_3 - x_4 + 0x_5 + \textcolor{blue}{x_6^a} + 0x_7^a = 13 \]</span> <span class="math display">\[0.77x_1 + 0.95x_2  + 0x_3 + 0x_4 - x_5 + 0x_6^a + \textcolor{blue}{x_7^a} = 50\]</span> <span class="math display">\[x_1, x_2, x_3, x_4, x_5, \textcolor{blue}{x_6^a, x_7^a}\ge 0\]</span> Entonces obtenemos las matrices del problema auxiliar: <span class="math display">\[c = \textcolor{blue}{\begin{bmatrix}0 \\ 0 \\ 0 \\ 0 \\ 0 \\ 1 \\ 1\end{bmatrix}}, x = \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ \textcolor{blue}{x_6^a} \\ \textcolor{blue}{x_7^a}\end{bmatrix}, A = \begin{bmatrix}0.45 &amp; 0.20 &amp; 1 &amp; 0 &amp; 0 &amp; \textcolor{blue}{0} &amp; \textcolor{blue}{0}\\ 0.15 &amp; 0.65 &amp;0 &amp; -1 &amp; 0 &amp; \textcolor{blue}{1} &amp; \textcolor{blue}{0}\\ 0.77 &amp; 0.95 &amp; 0 &amp; 0 &amp;-1 &amp; \textcolor{blue}{0} &amp; \textcolor{blue}{1}\end{bmatrix}, b = \begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix}\]</span> Observe que la base (base <span class="math inline">\(\mathcal{B} = \{3,6,7\}, \mathcal{N} = \{1,2,4,5\}\)</span> es una <em>base trivial</em> de este problema auxiliar. Esta base es factible, como se demuestra en seguida:</p>
-<p><span class="math display">\[B = \begin{bmatrix}1 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0\\0 &amp; 0 &amp;1\end{bmatrix}, N = \begin{bmatrix}0.45 &amp; 0.20 &amp; 0 &amp; 0\\ 0.15 &amp; 0.65 &amp; -1 &amp; 0 \\ 0.77 &amp; 0.95 &amp; 0 &amp; -1\end{bmatrix}\]</span> Observe que <span class="math inline">\(B^{-1} = B = I\)</span>, y por tanto la solución básica queda:</p>
-<p><span class="math display">\[x_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}1 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0\\0 &amp; 0 &amp;1\end{bmatrix}\begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix} = \begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix} = \begin{bmatrix}x_3 \\ x_6^a \\ x_7^a\end{bmatrix}\]</span></p>
-<p>Con esto podemos comenzar el simplex (puede auxiliarse en octave para los cálculos):</p>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Desarrollo del simplex de la <strong>Fase 1</strong>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Iteración 1</strong></p>
-<p><span class="math inline">\(\mathcal{B} = \{3,6,7\}, \mathcal{N} = \{1,2,4,5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}20 &amp; 13 &amp; 50\end{bmatrix}\)</span></p>
-<p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 1 &amp; 1\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}-0.92 &amp; \textcolor{blue}{-1.6} &amp; 1 &amp; 1\end{bmatrix}\)</span></p>
-<p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_2\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
-<p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_2)^T = \begin{bmatrix}0.20 &amp; 0.65 &amp; 0.95 \end{bmatrix}\)</span></p>
-<p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}100, \textcolor{red}{20}, 52.63\end{Bmatrix}\)</span></p>
-<p><strong>8. y 9.</strong> Hay denominadores <span class="math inline">\(&gt;0\)</span>, se debe continuar. La variable saliente de la base es <span class="math inline">\(x_6^a\)</span>. Actualizamos la base y continuamos.</p>
-<p><strong>Iteración 2</strong></p>
-<p><span class="math inline">\(\mathcal{B} = \{3,\textcolor{blue}{2},7\}, \mathcal{N} = \{1,\textcolor{red}{6},4,5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}16 &amp; 20 &amp; 31\end{bmatrix}\)</span></p>
-<p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; -1.4615 &amp; 1\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}-0.5508 &amp; 2.4615 &amp; \textcolor{blue}{-1.4615} &amp; 1\end{bmatrix}\)</span></p>
-<p><strong>4. y 5.</strong> Debe entrar x_4 a la base, y dado que hay negativos, debemos continuar.</p>
-<p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_4)^T = \begin{bmatrix}0.30 &amp; -1.54 &amp; 1.46 \end{bmatrix}\)</span></p>
-<p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}52, \infty, \textcolor{red}{21.21}\end{Bmatrix}\)</span></p>
-<p><strong>8. y 9.</strong> Hay denominadores <span class="math inline">\(&gt;0\)</span>, se debe continuar. La variable saliente de la base es <span class="math inline">\(x_7^a\)</span>. Actualizamos la base y continuamos.</p>
-<p><strong>Iteración 3</strong></p>
-<p><span class="math inline">\(\mathcal{B} = \{3,2,\textcolor{blue}{4}\}, \mathcal{N} = \{1,6,\textcolor{red}{7},5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}9.47 &amp; 52.63 &amp; 21.21\end{bmatrix}\)</span></p>
-<p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 0 &amp; 0\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}0 &amp; 1 &amp; 1 &amp; 0\end{bmatrix}\)</span></p>
-<p><strong>4. y 5.</strong> No hay costos reducidos negativos, <span style="color:blue;">Se debe parar ya que hemos llegado al óptimo.</span></p>
-</div>
-</div>
-</div>
-<p>Así, luego de resolver la Fase 1, la base óptima es <span class="math inline">\(\mathcal{B} = \{3,2,4\}, \mathcal{N} = \{1,6,7,5\}\)</span>. Podemos continuar a la Fase 2.</p>
-</section>
-<section id="fase-2" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="fase-2"><span class="header-section-number">2.2.2</span> Fase 2</h3>
-<p>Para esta fase, recuperamos la formulación original y ya podemos prescindir de las variables artificiales que fueron adicionadas en el problema auxiliar. Es decir, la base inicial es la base óptima anterior pero sin las columnas 6 y 7:</p>
-<p><span class="math display">\[\mathcal{B} = \{3,2,4\}, \mathcal{N} = \{1,\cancel{6,7,}5\} \textcolor{teal}{\rightarrow} \mathcal{B} = \{3,2,4\}, \mathcal{N} = \{1,5\}\]</span> Esta base es factible en el problema original, recordemos los datos, y evaluémosla:</p>
-<p><span class="math display">\[c = \begin{bmatrix}3 \\ 5 \\ 0 \\ 0 \\6\end{bmatrix}, x = \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4\\x_5\end{bmatrix}, A = \begin{bmatrix}0.45 &amp; 0.20 &amp; 1 &amp; 0 &amp; 0\\ 0.15 &amp; 0.65 &amp;0 &amp; -1 &amp; 0\\ 0.77 &amp; 0.95 &amp; 0 &amp; 0 &amp;-1\end{bmatrix}, b = \begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix}\]</span> A partir de la partición <span class="math inline">\(\mathcal{B}, \mathcal{N}\)</span>, tenemos:</p>
-<p><span class="math display">\[B = \begin{bmatrix}1 &amp; 0.20 &amp; 0 \\0 &amp; 0.65 &amp; -1\\0 &amp; 0.95 &amp;0\end{bmatrix}, N = \begin{bmatrix}0.45 &amp; 0 \\ 0.15 &amp; 0\\ 0.77 &amp; -1\end{bmatrix}\]</span></p>
-<p>La solución básica queda:</p>
-<p><span class="math display">\[x_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}1 &amp; 0.20 &amp; 0 \\0 &amp; 0.65 &amp; -1\\0 &amp; 0.95 &amp;0\end{bmatrix}^{-1}\begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix} = \begin{bmatrix}1 &amp; 0 &amp; -0.21 \\0 &amp; 0 &amp; 1.05\\0 &amp; -1 &amp; 0.68\end{bmatrix}\begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix} = \begin{bmatrix}9.47 \\ 52.63 \\ 21.21\end{bmatrix} = \begin{bmatrix}x_3 \\ x_2 \\ x_4\end{bmatrix}\]</span></p>
-<p>Como todos los <span class="math inline">\(x_{\mathcal{B}}\ge0\)</span> podemos comenzar el método simplex.</p>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Desarrollo del simplex de la <strong>Fase 2</strong>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Iteración 1</strong></p>
-<p><span class="math inline">\(\mathcal{B} = \{3,2,4\}, \mathcal{N} = \{1,5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}9.47 &amp; 52.63 &amp; 21.21\end{bmatrix}\)</span></p>
-<p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 0 &amp; 5.26\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}\textcolor{blue}{-1.05} &amp; 11.26\end{bmatrix}\)</span></p>
-<p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_1\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
-<p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_1)^T = \begin{bmatrix}0.28 &amp; 0.81 &amp; 0.38 \end{bmatrix}\)</span></p>
-<p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}\textcolor{red}{32.91}, 64.94, 56.28\end{Bmatrix}\)</span></p>
-<p><strong>8. y 9.</strong> Hay denominadores <span class="math inline">\(&gt;0\)</span>, se debe continuar. La variable saliente de la base es <span class="math inline">\(x_3\)</span>. Actualizamos la base y continuamos.</p>
-<p><strong>Iteración 2</strong></p>
-<p><span class="math inline">\(\mathcal{B} = \{\textcolor{blue}{1},2,4\}, \mathcal{N} = \{\textcolor{red}{3},5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}32.91 &amp; 25.96 &amp; 8.81\end{bmatrix}\)</span></p>
-<p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}-3.66 &amp; 0 &amp; 6.03\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}3.66 &amp; 12.03\end{bmatrix}\)</span></p>
-<p><strong>4. y 5.</strong> No hay costos reducidos negativos, <span style="color:blue;">Se debe parar ya que hemos llegado al óptimo.</span></p>
-</div>
-</div>
-</div>
-<p>De esta forma llegamos al óptimo del problema, siendo la solución óptima:</p>
-<p><span class="math display">\[x = \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \end{bmatrix} = \begin{bmatrix}32.91 \\ 25.96 \\ 0 \\ 8.81 \\ 0 \end{bmatrix}\]</span> Es decir, que se debe usar aproximadamente 32.91 kg de silo de maíz y 25.96 kg de melaza para producir el alimento. La variable <span class="math inline">\(x_4 = 8.81\)</span> indica que habrá un sobrante de proteína equivalente a 8.81 kg de la mezcla.</p>
-</section>
-</section>
-</section>
-<section id="método-de-la-gran-m" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Método de la gran M</h1>
-<p>Este método, al igual que el anterior consiste en adicionar variables artificiales al problema. Sin embargo, a diferencia del anterior método, este consiste en mantener el problema original con las variables nuevas en su estructura sin recurrir a un problema auxiliar. Esto con el único objetivo de hacer viable el inicio del simplex.</p>
-<p>Las variables artificiales añadidas se irán eliminando de forma paulatina hasta que todas ellas sean no básicas. En ese momento se puede prescindir de ellas (aunque esto es opcional) y continuar resolviendo el problema hasta la optimalidad.</p>
-<p>La forma en que durante la optimización, se opte por ir eliminándolas de forma automática y paulatina, es penalizarlas fuertemente en la función objetivo. Esta penalización es simbólica y se simboliza como un valor M. De ahí el nombre del método.</p>
-<p>Este valor debe ser lo suficientemente grande como para priorizar la eliminación de estas variables artificiales por encima del objetivo original del problema sin modificar. Sin embargo, se debe tener cuidado si se elige un valor exagerado, puesto que los cálculos del vector multiplicador y costos reducidos se podrían complicar un poco más por los números mayores.</p>
-<section id="esquema-general-del-método-1" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="esquema-general-del-método-1"><span class="header-section-number">3.1</span> Esquema general del método</h2>
-<p>Resolver hasta la optimalidad, el problema modificado: <span class="math display">\[\min c^Tx + M\sum_{i \in F} x_i^a\]</span> Sujeto a <span class="math display">\[Ax + x^a = b\]</span> <span class="math display">\[x, x^a \ge 0\]</span></p>
-<p>Siendo <span class="math inline">\(x_i^a\)</span> las variables artificiales adicionadas, <span class="math inline">\(F\)</span> el conjunto de índices de las columnas adicionadas y <span class="math inline">\(x^a\)</span> el vector de variables adicionadas al modelo.</p>
-</section>
-<section id="ejemplo-de-aplicación" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="ejemplo-de-aplicación"><span class="header-section-number">3.2</span> Ejemplo de aplicación</h2>
-<p>Considere el problema anterior de la <a href="#sec-ejemplo">Sección&nbsp;2.2</a>. El modelo sin modificaciones se muestra a continuación. Se presenta junto con un recorderis de la notación final utilizada.</p>
-<p>Sea:</p>
-<p><span class="math inline">\(x_1:=\)</span> Cantidad de kg de silo de maíz usado en la mezcla.</p>
-<p><span class="math inline">\(x_2:=\)</span> Cantidad de kg de melaza usada en la mezcla.</p>
-<p><span class="math inline">\(x_5:=\)</span> Cantidad de mezcla hecha de más por encima de los 50kg.</p>
-<p>Minimizar el costo total de la mezcla: <span class="math display">\[\min c_{Total} = 3x_1 + 5x_2 + 6x_5\]</span></p>
-<p>Sujeto a:</p>
-<p><span class="math display">\[0.45x_1 + 0.20x_2 \le 50\]</span> <span class="math display">\[0.15x_1 + 0.65x_2 \ge 13\]</span> <span class="math display">\[0.77x_1 + 0.95x_2 - x_5 = 50\]</span> <span class="math display">\[x_1, x_2, x_5 \ge 0\]</span> De la misma forma como se actuó en el método de las dos fases, se necesita agregar 2 variables artificiales <span class="math inline">\(x_6^a\)</span> y <span class="math inline">\(x_7^a\)</span>, asociadas a las columnas <span class="math inline">\(\begin{bmatrix}0\\1\\0\end{bmatrix}\)</span> y <span class="math inline">\(\begin{bmatrix}0\\0\\1\end{bmatrix}\)</span> de la matriz identidad respectivamente.</p>
-<p>Estas variables serán adicionadas a la función objetivo actual, con una penalización simbólica <span class="math inline">\(M\)</span>. Para nuestro caso, el <span class="math inline">\(M\)</span> seleccionado es de 100, que será una penalización más que suficiente para garantizar la priorización de la eliminación de las variables artificiales añadidas de manera paulatina.</p>
-<p>El problema modificado (y estandarizado) queda de la siguiente forma: <span class="math display">\[\min \textcolor{blue}{\bar{z}} = 3x_1 + 5x_2 + 0x_3 + 0x_4 + 6x_5 + \textcolor{blue}{100x_6^a + 100x_7^a}\]</span></p>
-<p>Sujeto a:</p>
-<p><span class="math display">\[0.45x_1 + 0.20x_2 +x_3 + 0x_4 + 0x_5 + 0x_6^a + 0x_7^a = 20\]</span> <span class="math display">\[0.15x_1 + 0.65x_2 +0x_3 -x_4 + 0x_5 + \textcolor{blue}{x_6^a} + 0x_7^a= 13\]</span> <span class="math display">\[0.77x_1 + 0.95x_2 +0x_3 + 0x_4 - x_5 + 0x_6^a + \textcolor{blue}{x_7^a}= 50\]</span> <span class="math display">\[x_1, x_2, x_3, x_4, x_5, \textcolor{blue}{x_6^a, x_7^a} \ge 0\]</span> Entonces obtenemos las matrices del problema auxiliar: <span class="math display">\[c = \textcolor{blue}{\begin{bmatrix}3 \\ 5 \\ 0 \\ 0 \\ 6 \\ 100 \\ 100\end{bmatrix}}, x = \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ \textcolor{blue}{x_6^a} \\ \textcolor{blue}{x_7^a}\end{bmatrix}, A = \begin{bmatrix}0.45 &amp; 0.20 &amp; 1 &amp; 0 &amp; 0 &amp; \textcolor{blue}{0} &amp; \textcolor{blue}{0}\\ 0.15 &amp; 0.65 &amp;0 &amp; -1 &amp; 0 &amp; \textcolor{blue}{1} &amp; \textcolor{blue}{0}\\ 0.77 &amp; 0.95 &amp; 0 &amp; 0 &amp;-1 &amp; \textcolor{blue}{0} &amp; \textcolor{blue}{1}\end{bmatrix}, b = \begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix}\]</span> Observe que la base (base <span class="math inline">\(\mathcal{B} = \{3,6,7\}, \mathcal{N} = \{1,2,4,5\}\)</span> es una <em>base trivial</em> de este problema auxiliar. Esta base es factible, como se demuestra en seguida:</p>
-<p><span class="math display">\[B = \begin{bmatrix}1 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0\\0 &amp; 0 &amp;1\end{bmatrix}, N = \begin{bmatrix}0.45 &amp; 0.20 &amp; 0 &amp; 0\\ 0.15 &amp; 0.65 &amp; -1 &amp; 0 \\ 0.77 &amp; 0.95 &amp; 0 &amp; -1\end{bmatrix}\]</span> Observe que <span class="math inline">\(B^{-1} = B = I\)</span>, y por tanto la solución básica queda:</p>
-<p><span class="math display">\[x_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}1 &amp; 0 &amp; 0\\0 &amp; 1 &amp; 0\\0 &amp; 0 &amp;1\end{bmatrix}\begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix} = \begin{bmatrix}20 \\ 13 \\ 50\end{bmatrix} = \begin{bmatrix}x_3 \\ x_6^a \\ x_7^a\end{bmatrix}\]</span></p>
-<p>Que es <span class="math inline">\(\ge0\)</span> y por tanto es factible. Con esto podemos comenzar el simplex (Nuevamente, puede auxiliarse en octave para los cálculos):</p>
-<div class="callout callout-style-default callout-caution callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Desarrollo del simplex <strong>Gran M</strong>
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p><strong>Iteración 1</strong></p>
-<p><span class="math inline">\(\mathcal{B} = \{3,6,7\}, \mathcal{N} = \{1,2,4,5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}20 &amp; 13 &amp; 50\end{bmatrix}\)</span></p>
-<p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 100 &amp; 100\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}-0.89 &amp; \textcolor{blue}{-155} &amp; 100 &amp; 106\end{bmatrix}\)</span></p>
-<p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_2\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
-<p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_2)^T = \begin{bmatrix}0.20 &amp; 0.65 &amp; 0.95 \end{bmatrix}\)</span></p>
-<p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}100, \textcolor{red}{20}, 52.63\end{Bmatrix}\)</span></p>
-<p><strong>8. y 9.</strong> Hay denominadores <span class="math inline">\(&gt;0\)</span>, se debe continuar. La variable saliente de la base es <span class="math inline">\(x_6^a\)</span>. Actualizamos la base y continuamos.</p>
-<p><strong>Iteración 2</strong></p>
-<p><span class="math inline">\(\mathcal{B} = \{3,\textcolor{blue}{2},7\}, \mathcal{N} = \{1,\textcolor{red}{6},4,5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}16 &amp; 20 &amp; 31\end{bmatrix}\)</span></p>
-<p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; -138.46 &amp; 100\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}-53.23 &amp; 238.46 &amp; \textcolor{blue}{-138.46} &amp; 106\end{bmatrix}\)</span></p>
-<p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_4\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
-<p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_4)^T = \begin{bmatrix}0.31 &amp; -1.54 &amp; 1.46 \end{bmatrix}\)</span></p>
-<p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}52, \infty, \textcolor{red}{21.21}\end{Bmatrix}\)</span></p>
-<p><strong>8. y 9.</strong> Hay denominadores <span class="math inline">\(&gt;0\)</span>, se debe continuar. La variable saliente de la base es <span class="math inline">\(x_7^a\)</span>. Actualizamos la base y continuamos.</p>
-<p><strong>¡!</strong> <span style="color:red;"> <strong>OBS:</strong> </span> A partir de aquí podríamos continuar sin las variables artificiales <span class="math inline">\(x_6^a\)</span> y <span class="math inline">\(x_7^a\)</span>. Sin embargo, para efectos de este ejemplo continuaremos con ellas.</p>
-<p><strong>Iteración 3</strong></p>
-<p><span class="math inline">\(\mathcal{B} = \{3,2,\textcolor{blue}{4}\}, \mathcal{N} = \{1,6,\textcolor{red}{7},5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}9.47 &amp; 52.63 &amp; 21.21\end{bmatrix}\)</span></p>
-<p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 0 &amp; 5.26\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}\textcolor{blue}{-1.05} &amp; 100 &amp; 94.74 &amp; 11.26\end{bmatrix}\)</span></p>
-<p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_1\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
-<p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_1)^T = \begin{bmatrix}0.28 &amp; 0.81 &amp; 0.38 \end{bmatrix}\)</span></p>
-<p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}\textcolor{red}{32.91}, 64.94, 56.28\end{Bmatrix}\)</span></p>
-<p><strong>8. y 9.</strong> Hay denominadores <span class="math inline">\(&gt;0\)</span>, se debe continuar. La variable saliente de la base es <span class="math inline">\(x_3\)</span>. Actualizamos la base y continuamos.</p>
-<p><strong>Iteración 4</strong></p>
-<p><span class="math inline">\(\mathcal{B} = \{\textcolor{blue}{1},2,4\}, \mathcal{N} = \{\textcolor{red}{3},6,7,5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}32.91 &amp; 25.96 &amp; 8.81\end{bmatrix}\)</span></p>
-<p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}-3.66 &amp; 0 &amp; 6.03\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}3.66 &amp; 100 &amp; 93.97 &amp; 12.03\end{bmatrix}\)</span></p>
-<p><strong>4. y 5.</strong> No hay costos reducidos negativos, <span style="color:blue;">Se debe parar ya que hemos llegado al óptimo.</span></p>
-</div>
-</div>
-</div>
-<p>De esta manera hemos llegado a la solución óptima del problema modificado. Observe que la solución óptima, dado que no eliminamos las variables artificiales es:</p>
-<p><span class="math display">\[x = \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\x_6^a \\x_7^a \end{bmatrix} = \begin{bmatrix}32.91 \\ 25.96 \\ 0 \\ 8.81 \\ 0 \\ 0 \\0\end{bmatrix}\]</span> Como es de esperarse, llegamos a la misma solución ótima del problema anterior. Es decir, que se debe usar aproximadamente 32.91 kg de silo de maíz y 25.96 kg de melaza para producir el alimento. La variable <span class="math inline">\(x_4 = 8.81\)</span> indica que habrá un sobrante de proteína equivalente a 8.81 kg de la mezcla.</p>
-<p>Como se deseaba, las variables artificiales tienen valor 0 en la solución óptima.</p>
-</section>
-</section>
-<section id="ejercicios-y-lecturas-complementarias." class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Ejercicios y lecturas complementarias.</h1>
-<section id="ejercicios" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">4.1</span> Ejercicios</h2>
-<p>Resuelva por medio del Simplex 2 fases los siguientes ejercicios:</p>
-<ol type="1">
-<li>Considere el siguiente conjunto de restricciones:</li>
-</ol>
-<p><span id="eq-1"><span class="math display">\[-2x_1+3x_2=3 \tag{1}\]</span></span></p>
-<p><span id="eq-2"><span class="math display">\[4x_1+5x_2\ge10 \tag{2}\]</span></span></p>
-<p><span id="eq-3"><span class="math display">\[x_1+2x_2\le5 \tag{3}\]</span></span></p>
-<p><span id="eq-4"><span class="math display">\[6x_1+7x_2\le3 \tag{4}\]</span></span></p>
-<p><span id="eq-5"><span class="math display">\[4x_1+8x_2\ge5 \tag{5}\]</span></span></p>
-<p><span class="math display">\[x_1,x_2\ge0\]</span> Re suelva los siguientes problemas con el método especificado al final de cada item:</p>
-<p><strong>(a)</strong> Maximizar <span class="math inline">\(z = 5x1 + 6x2\)</span> sujeto a (1), (3) y (4). Use simplex gran M.</p>
-<p><strong>(b)</strong> Maximizar <span class="math inline">\(z = 2x1 + 7x2\)</span> sujeto a (1), (2) (4) y (5). Use simplex 2 fases.</p>
-<p><strong>(c)</strong> Minimizar <span class="math inline">\(z = 3x1 + 6x2\)</span> sujeto a (3), (4) y (5). Use simplex gran M.</p>
-<p><strong>(d)</strong> Minimizar <span class="math inline">\(z = 4x1 + 6x2\)</span> sujeto a (1), (2) y (5). Use simplex gran M.</p>
-<p><strong>(e)</strong> Minimizar <span class="math inline">\(z = 3x1 + 2x2\)</span> sujeto a (1) y (5). Use simplex 2 fases.</p>
-<ol start="6" type="a">
-<li>Minimizar <span class="math inline">\(z = 6x1 + 2x2\)</span> sujeto a (1), (3) y (5). Use simplex 2 fases.</li>
-</ol>
-<ol start="2" type="1">
-<li>Modele y resuelva por el método de su preferencia el siguiente problema de optimización. <!-- Luego de resolver responda las preguntas al final del planteamiento del problema. --></li>
-</ol>
-<p>Una universidad ha sido premiada con un nuevo centro de cómputo de alto poder destinado a surtir labores de investigación. El centro de cómputo está compuesto de 3 salas que funcionan en paralelo. Los usuarios apartan su horario, alistan sus experimentos en la sala solicitada y se deja trabajar a los equipos. La universidad ha dispuesto que debe haber un auxiliar por sala durante el horario de atención.</p>
-<p>Los auxiliares son estudiantes de posgrado a los que se les reconoce un salario por hora que depende de su nivel de experiencia y habilidades informáticas. Este precio fue fijado por la Universidad en el estudio de las hojas de vida de los aspirantes a auxiliar. En la sala 2, hay equipos especiales que solo pueden manipular auxiliares que sean estudiantes de doctorado. En las otras dos salas puede haber tanto estudiantes de maestría como de doctorado.</p>
-<p>La tabla a continuación explica las disponibilidades de los diferentes estudiantes de maestría y doctorado así como el costo por hora para la universidad. Se trabaja una jornada continua de 7 horas de lunes a viernes. A cada auxiliar se le garantiza un mínimo de 8 horas semanales asignadas.</p>
-<table class="table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 9%">
-<col style="width: 10%">
-<col style="width: 14%">
-<col style="width: 10%">
-<col style="width: 11%">
-<col style="width: 14%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><strong>Est</strong></th>
-<th>Lunes</th>
-<th>Martes</th>
-<th>Miércoles</th>
-<th>Jueves</th>
-<th>Viernes</th>
-<th>Estudia</th>
-<th>Salario/h</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Donald</strong></td>
-<td>4</td>
-<td>4</td>
-<td>7</td>
-<td>0</td>
-<td>6</td>
-<td>Doctorado</td>
-<td>10</td>
-</tr>
-<tr class="even">
-<td><strong>Ana</strong></td>
-<td>7</td>
-<td>4</td>
-<td>0</td>
-<td>8</td>
-<td>4</td>
-<td>Doctorado</td>
-<td>12</td>
-</tr>
-<tr class="odd">
-<td><strong>Jonas</strong></td>
-<td>5</td>
-<td>6</td>
-<td>6</td>
-<td>4</td>
-<td>0</td>
-<td>Maestría</td>
-<td>11</td>
-</tr>
-<tr class="even">
-<td><strong>Pepito</strong></td>
-<td>6</td>
-<td>0</td>
-<td>4</td>
-<td>5</td>
-<td>6</td>
-<td>Maestría</td>
-<td>8</td>
-</tr>
-<tr class="odd">
-<td><strong>Taylor</strong></td>
-<td>0</td>
-<td>6</td>
-<td>8</td>
-<td>4</td>
-<td>6</td>
-<td>Maestría</td>
-<td>10</td>
-</tr>
-</tbody>
-</table>
-<p>Ayude a la universidad a tomar la mejor decisión respecto a la asignación de horas a cada estudiante garantizando.</p>
-<ol start="3" type="1">
-<li>Modele y resuelva por el método de su preferencia el siguiente problema de optimización.</li>
-</ol>
-<p>Hodor vive en el mundo de los espíritus y se prepara para embarcarse en un viaje que le permitirá desarrollar sus poderes al máximo. En el camino le esperan monstruos y retos que le exigirán tener buena salud, puntos de ataque, velocidad y defensa. Hodor puede embarcar ciertas sustancias que le permitirán potenciar algunos de estos aspectos o curarse en caso de heridas. Sin embargo la mochila de Hodor tiene ciertos límites de peso, volumen, valor monetario y karma.</p>
-<p>Aquí tienes la tabla de los objetos que Hodor puede llevar en su viaje:</p>
-<div class="cell" data-warnings="false">
-<div class="cell-output-display">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Datos sobre los objetos.</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Objeto</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Peso (kg)</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Volumen (l)</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Costo (monedas)</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Consumo de Karma</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Poción de Salud</td>
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">100</td>
-<td style="text-align: left;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Elixir de Ataque</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">150</td>
-<td style="text-align: left;">15</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Tónico de Velocidad</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">0.5</td>
-<td style="text-align: left;">200</td>
-<td style="text-align: left;">20</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Escudo de Defensa</td>
-<td style="text-align: left;">10</td>
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">250</td>
-<td style="text-align: left;">25</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Hierbas Curativas</td>
-<td style="text-align: left;">0.5</td>
-<td style="text-align: left;">0.2</td>
-<td style="text-align: left;">50</td>
-<td style="text-align: left;">5</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Cristal de Poder</td>
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">300</td>
-<td style="text-align: left;">30</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Crema de la Sapiencia</td>
-<td style="text-align: left;">0.1</td>
-<td style="text-align: left;">0.05</td>
-<td style="text-align: left;">500</td>
-<td style="text-align: left;">50</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Polvo de Agilidad</td>
-<td style="text-align: left;">4</td>
-<td style="text-align: left;">3</td>
-<td style="text-align: left;">200</td>
-<td style="text-align: left;">20</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Brevaje de Invisibilidad</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">350</td>
-<td style="text-align: left;">35</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Pudin de Regeneración</td>
-<td style="text-align: left;">0.05</td>
-<td style="text-align: left;">0.01</td>
-<td style="text-align: left;">100</td>
-<td style="text-align: left;">10</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Límite mochila de Hodor</td>
-<td style="text-align: left;">50</td>
-<td style="text-align: left;">30</td>
-<td style="text-align: left;">1500</td>
-<td style="text-align: left;">500</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
-<caption>Atributos mejorados por los objetos y límites de existencia.</caption>
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Objeto</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Atributos mejorados</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Disponibilidad</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Poción de Salud</td>
-<td style="text-align: left;">Salud (+50),Defensa (-2)</td>
-<td style="text-align: left;">10 und</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Elixir de Ataque</td>
-<td style="text-align: left;">Ataque (+20), Velocidad (+5)</td>
-<td style="text-align: left;">5 und</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Tónico de Velocidad</td>
-<td style="text-align: left;">Velocidad (+20), Ataque (+10)</td>
-<td style="text-align: left;">3 und</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Escudo de Defensa</td>
-<td style="text-align: left;">Defensa (+20), Salud (+10)</td>
-<td style="text-align: left;">6 und</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Hierbas Curativas</td>
-<td style="text-align: left;">Salud (+10)</td>
-<td style="text-align: left;">$\infty$</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Cristal de Poder</td>
-<td style="text-align: left;">Todos los atributos (+10)</td>
-<td style="text-align: left;">8 und</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Crema de la Sapiencia</td>
-<td style="text-align: left;">Salud (+10), Defensa (+25)</td>
-<td style="text-align: left;">$\infty$</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Polvo de Agilidad</td>
-<td style="text-align: left;">Defensa (+25), Velocidad (+10)</td>
-<td style="text-align: left;">3 und</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Brevaje de Invisibilidad</td>
-<td style="text-align: left;">Velocidad (+45), Salud (-3)</td>
-<td style="text-align: left;">7 und</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Pudin de Regeneración</td>
-<td style="text-align: left;">Salud (+40), Ataque (-5)</td>
-<td style="text-align: left;">2 und</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-</div>
-<!-- | **Objeto** | **Peso (kg)** | **Volumen (l)** | **Costo (monedas)** | **Consumo de Karma** | **Atributos mejorados** | **Disponibilidad** | -->
-<!-- | --- | --- | --- | --- | --- | --- | --- | -->
-<!-- | Poción de Salud | 3 | 1 | 100 | 10 | Salud (+50), Defensa (-2) |10 und | -->
-<!-- | Elixir de Ataque | 2 | 1 | 150 | 15 | Ataque (+20), Velocidad (+5) | 5 und | -->
-<!-- | Tónico de Velocidad | 1 | 0.5 | 200 | 20 | Velocidad (+20), Ataque (+10) | 3und | -->
-<!-- | Escudo de Defensa | 10 | 5 | 250 | 25 | Defensa (+20), Salud (+10) | 6 und | -->
-<!-- | Hierbas Curativas | 0.5 | 0.2 | 50 | 5 | Salud (+10) | $\infty$ | -->
-<!-- | Cristal de Poder | 5 | 2 | 300 | 30 | Todos los atributos (+10) | 8 und | -->
-<!-- | Crema de la Sapiencia | 0.1 | 0.05 | 500 | 50 | Salud (+10), Defensa (+25) | $\infty$ | -->
-<!-- | Polvo de Agilidad | 4 | 3 | 200 | 20 | Defensa (+25), Velocidad (+10) | 3 und | -->
-<!-- | Brevaje de Invisibilidad | 2 | 1 | 350 | 35 | Velocidad (+45), Salud (-3) |7 und | -->
-<!-- | Pudin de Regeneración | 0.05 | 0.01 | 100 | 10 | Salud (+40), Ataque (-5) | 2 | -->
-<!-- | ***Capacidad de la mochila de Hodor*** | 50 | 30 | 1500 | 500 | | -->
-<p>Eres el mejor amigo de Hodor y deberías ayudarlo a determinar cuáles deben ser las cantidades que necesita de cada item para poder iniciar su viaje con la mejor preparación posible.</p>
-<p>Para ayudarle en su viaje, has preguntado a Hodor qué le gustaría priorizar, y este te ha respondido que le gustaría tener equilibrio en los 4 atributos, le ha dado una nota de 8/10 a cada aspecto menos a la salud a la que le ha dado una nota de 10/10. Siendo este, claramente el aspecto más importante.</p>
-<p>Sé un buen amigo y ayuda a Hodor a decidir cuánta cantidad de cada objeto llevar en su mochila para maximizar sus atributos, sin exceder los límites de su mochila.</p>
-<p>¡Buena suerte en tu viaje, Hodor!</p>
-<ol start="4" type="1">
-<li><strong>Otros ejercicios</strong> Hacer cuantos más puedan.</li>
-</ol>
-<p>Libro. <strong><em>Investigación de Operaciones</em></strong> de Hamdy Taha 9na Edición. Capítulo 3, Sección 3.5 (Página 99 en adelante.)</p>
-<p>Ejercicios 2.4 A</p>
-<p>Ejercicios 2.4 B</p>
-<p>Ejercicios 2.4 C</p>
-<p>Ejercicios 2.4 D</p>
-<p>Ejercicios 2.4 E</p>
-<p>Ejercicios 2.4 F</p>
-</section>
-<section id="lecturas-complementarias" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="lecturas-complementarias"><span class="header-section-number">4.2</span> Lecturas complementarias</h2>
-<p><strong>(Leer para el lunes próximo se evaluará el contenido de esta guía y el de las lecturas complementarias.)</strong></p>
-<p>Se recomienda leer los casos especiales del simplex y cómo tratarlos:</p>
+<section id="references" class="level1">
+<h1>References</h1>
 <ul>
-<li><p>Soluciones degeneradas o degeneración (Adicional a la lectura, investigar sobre ciclamientos o <em>looping</em> en el simplex y regla de Bland).</p></li>
-<li><p>Óptimos alternativos: ¿Cuáles son las condiciones necesarias y suficientes para que se den?.</p></li>
-<li><p>Problemas ilimitados (Solución no acotada).</p></li>
-<li><p>Solución no factible.</p></li>
+<li>Bertsimas, D., &amp; Tsitsiklis, J. N. (1997). Introduction to linear optimization (1st ed.). Athena Scientific and Dynamic Ideas, LLC.</li>
+<li>Arenales, M., Armentano, V. A., Morabito, R., &amp; Yanasse, H. H. (2014). Pesquisa Operacional para cursos de engenharia (2a Ed). Elsevier Editora Ltda.</li>
+<li>Taha, H. A. (2017). Operations research an introduction (Tenth edition). Pearson.</li>
+<li>Munari, P. (2021-2022). Pedro Munari. Canal de Youtube. Retrieved June 18, 2023, from <a href="https://www.youtube.com/c/PedroMunari">https://www.youtube.com/c/PedroMunari</a></li>
 </ul>
-<p>La lectura recomendada se encuentra en el libro Investigación de Operaciones de Hamdy Taha 9na Edición. Capítulo 3, Sección 3.5 (Página 99 en adelante.)</p>
-<!-- La regla de Bland es un refinamiento algorítmico del método simplex para optimización lineal¹. Con la regla de Bland, el algoritmo simplex resuelve problemas de optimización lineal factibles sin ciclos¹. -->
-<!-- El algoritmo simplex original comienza con una solución factible básica arbitraria y luego cambia la base para aumentar el objetivo de maximización y encontrar una solución óptima². Sin embargo, hay ejemplos de programas lineales degenerados, en los que el algoritmo simplex original funciona para siempre. Se atasca en una solución básica factible (una esquina del politopo factible) y cambia las bases de forma cíclica sin aumentar el objetivo de maximización². -->
-<!-- La regla de Bland evita estos ciclos al elegir una columna para ingresar la base². Se puede probar formalmente que, con la regla de selección de Bland, el algoritmo simplex nunca cicla, por lo que se garantiza que terminará en un tiempo limitado². -->
-<!-- El algoritmo se define de la siguiente manera: -->
-<!-- 1. Elija la columna no básica con el número más bajo (es decir, la más a la izquierda) con un costo negativo (reducido). -->
-<!-- 2. Ahora, entre las filas, elija la que tenga la relación más baja entre el lado derecho (transformado) y el coeficiente en el cuadro dinámico donde el coeficiente es mayor que cero. -->
-<!-- 3. Si la proporción mínima es compartida por varias filas, elija la fila con la columna (variable) básica con el número más bajo². -->
-<!-- Si bien la regla de pivote de Bland es teóricamente importante, desde una perspectiva práctica es bastante ineficiente y lleva mucho tiempo converger. En la práctica, se utilizan otras reglas de pivote y el ciclismo casi nunca ocurre². -->
-<!-- Source: Conversation with Bing, 11/17/2023 -->
-<!-- (1) Blands rule - Wikipedia. https://en.wikipedia.org/wiki/Bland%27s_rule. -->
-<!-- (2) Regla de Bland AlgoritmoyExtensiones a matroides orientados - Wikipedia. https://hmong.es/wiki/Bland%27s_rule. -->
-<!-- (3) Regla de Bland - Blands rule - abcdef.wiki. https://bing.com/search?q=Regla+de+Bland. -->
-<!-- (4) Regla de Bland - Blands rule - abcdef.wiki. https://es.abcdef.wiki/wiki/Blands_rule. -->
-<!-- (5) undefined. https://es.abcdef.wiki/wiki/Bland. -->
-</section>
 </section>
 
 </main>
