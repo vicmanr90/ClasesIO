@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof: Victor Mario Noble Ramos, MSc.">
+
+<title>Duality and sensitivity analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="7_Duality_Sensitivity_files/libs/clipboard/clipboard.min.js"></script>
+<script src="7_Duality_Sensitivity_files/libs/quarto-html/quarto.js"></script>
+<script src="7_Duality_Sensitivity_files/libs/quarto-html/popper.min.js"></script>
+<script src="7_Duality_Sensitivity_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="7_Duality_Sensitivity_files/libs/quarto-html/anchor.min.js"></script>
+<link href="7_Duality_Sensitivity_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="7_Duality_Sensitivity_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="7_Duality_Sensitivity_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="7_Duality_Sensitivity_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="7_Duality_Sensitivity_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#motivation-and-economic-interpretation" id="toc-motivation-and-economic-interpretation" class="nav-link active" data-scroll-target="#motivation-and-economic-interpretation"><span class="header-section-number">1</span> Motivation and economic interpretation</a>
+  <ul class="collapse">
+  <li><a href="#remembering-the-alloy-problem" id="toc-remembering-the-alloy-problem" class="nav-link" data-scroll-target="#remembering-the-alloy-problem"><span class="header-section-number">1.1</span> Remembering the alloy problem</a></li>
+  <li><a href="#the-alloy-problem-lp-model" id="toc-the-alloy-problem-lp-model" class="nav-link" data-scroll-target="#the-alloy-problem-lp-model"><span class="header-section-number">1.2</span> The alloy problem LP model</a></li>
+  </ul></li>
+  <li><a href="#the-dual-problem-and-its-economic-interpretation-of-duality" id="toc-the-dual-problem-and-its-economic-interpretation-of-duality" class="nav-link" data-scroll-target="#the-dual-problem-and-its-economic-interpretation-of-duality"><span class="header-section-number">2</span> The dual problem and its economic interpretation of duality</a>
+  <ul class="collapse">
+  <li><a href="#the-dual-problem-model-formulation." id="toc-the-dual-problem-model-formulation." class="nav-link" data-scroll-target="#the-dual-problem-model-formulation."><span class="header-section-number">2.1</span> The dual problem: model formulation.</a></li>
+  <li><a href="#the-complete-dual-model" id="toc-the-complete-dual-model" class="nav-link" data-scroll-target="#the-complete-dual-model"><span class="header-section-number">2.2</span> The complete dual model</a></li>
+  <li><a href="#characteristics-of-the-pair-primal-dual" id="toc-characteristics-of-the-pair-primal-dual" class="nav-link" data-scroll-target="#characteristics-of-the-pair-primal-dual"><span class="header-section-number">2.3</span> Characteristics of the pair primal-dual</a></li>
+  </ul></li>
+  <li><a href="#the-primal-dual-table-conversion" id="toc-the-primal-dual-table-conversion" class="nav-link" data-scroll-target="#the-primal-dual-table-conversion"><span class="header-section-number">3</span> The primal-dual table conversion</a>
+  <ul class="collapse">
+  <li><a href="#excercise" id="toc-excercise" class="nav-link" data-scroll-target="#excercise"><span class="header-section-number">3.1</span> Excercise:</a></li>
+  <li><a href="#importance-of-the-duality" id="toc-importance-of-the-duality" class="nav-link" data-scroll-target="#importance-of-the-duality"><span class="header-section-number">3.2</span> Importance of the duality</a></li>
+  <li><a href="#overview-of-the-duality-theory" id="toc-overview-of-the-duality-theory" class="nav-link" data-scroll-target="#overview-of-the-duality-theory"><span class="header-section-number">3.3</span> Overview of the duality theory</a></li>
+  <li><a href="#further-reading-on-the-duality-theory" id="toc-further-reading-on-the-duality-theory" class="nav-link" data-scroll-target="#further-reading-on-the-duality-theory"><span class="header-section-number">3.4</span> Further reading on the duality theory</a></li>
+  </ul></li>
+  <li><a href="#an-overview-of-the-dual-simplex-method" id="toc-an-overview-of-the-dual-simplex-method" class="nav-link" data-scroll-target="#an-overview-of-the-dual-simplex-method"><span class="header-section-number">4</span> An overview of the <em>Dual Simplex</em> method</a>
+  <ul class="collapse">
+  <li><a href="#the-dual-simplex-algorithm" id="toc-the-dual-simplex-algorithm" class="nav-link" data-scroll-target="#the-dual-simplex-algorithm"><span class="header-section-number">4.1</span> The dual simplex algorithm</a></li>
+  <li><a href="#initialization" id="toc-initialization" class="nav-link" data-scroll-target="#initialization"><span class="header-section-number">4.2</span> Initialization</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">4.3</span> Example</a></li>
+  <li><a href="#the-dual-simplex-algorithm-live-action" id="toc-the-dual-simplex-algorithm-live-action" class="nav-link" data-scroll-target="#the-dual-simplex-algorithm-live-action"><span class="header-section-number">4.4</span> The dual simplex algorithm live action</a></li>
+  </ul></li>
+  <li><a href="#sensitivity-analysis" id="toc-sensitivity-analysis" class="nav-link" data-scroll-target="#sensitivity-analysis"><span class="header-section-number">5</span> Sensitivity analysis</a>
+  <ul class="collapse">
+  <li><a href="#aspects-to-have-into-account" id="toc-aspects-to-have-into-account" class="nav-link" data-scroll-target="#aspects-to-have-into-account"><span class="header-section-number">5.1</span> Aspects to have into account</a></li>
+  <li><a href="#remember-the-simplex-method-important-terms" id="toc-remember-the-simplex-method-important-terms" class="nav-link" data-scroll-target="#remember-the-simplex-method-important-terms"><span class="header-section-number">5.2</span> Remember the simplex method important terms</a></li>
+  <li><a href="#cases-for-sensitivity-analysis" id="toc-cases-for-sensitivity-analysis" class="nav-link" data-scroll-target="#cases-for-sensitivity-analysis"><span class="header-section-number">5.3</span> Cases for sensitivity analysis</a></li>
+  <li><a href="#changes-in-independent-terms-vector-resources-vector-b" id="toc-changes-in-independent-terms-vector-resources-vector-b" class="nav-link" data-scroll-target="#changes-in-independent-terms-vector-resources-vector-b"><span class="header-section-number">5.4</span> 1. Changes in independent terms vector (resources vector) <span class="math inline">\(b\)</span></a>
+  <ul class="collapse">
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">5.4.1</span> Example</a></li>
+  </ul></li>
+  <li><a href="#changes-in-of-coefficients-costs-vector-c" id="toc-changes-in-of-coefficients-costs-vector-c" class="nav-link" data-scroll-target="#changes-in-of-coefficients-costs-vector-c"><span class="header-section-number">5.5</span> 2. Changes in OF coefficients (costs vector) <span class="math inline">\(c\)</span></a>
+  <ul class="collapse">
+  <li><a href="#the-changed-cost-is-non-basic-k-in-mathcaln" id="toc-the-changed-cost-is-non-basic-k-in-mathcaln" class="nav-link" data-scroll-target="#the-changed-cost-is-non-basic-k-in-mathcaln"><span class="header-section-number">5.5.1</span> 2.1. The changed cost is non-basic (<span class="math inline">\(k \in \mathcal{N}\)</span>)</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2"><span class="header-section-number">5.5.2</span> Example</a></li>
+  <li><a href="#the-changed-cost-is-basic-k-in-mathcalb" id="toc-the-changed-cost-is-basic-k-in-mathcalb" class="nav-link" data-scroll-target="#the-changed-cost-is-basic-k-in-mathcalb"><span class="header-section-number">5.5.3</span> 2.2. The changed cost is basic (<span class="math inline">\(k \in \mathcal{B}\)</span>)</a></li>
+  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3"><span class="header-section-number">5.5.4</span> Example</a></li>
+  </ul></li>
+  <li><a href="#addition-of-a-new-variable" id="toc-addition-of-a-new-variable" class="nav-link" data-scroll-target="#addition-of-a-new-variable"><span class="header-section-number">5.6</span> 3. Addition of a new variable</a>
+  <ul class="collapse">
+  <li><a href="#example-4" id="toc-example-4" class="nav-link" data-scroll-target="#example-4"><span class="header-section-number">5.6.1</span> Example</a></li>
+  </ul></li>
+  <li><a href="#changes-in-columns-of-a" id="toc-changes-in-columns-of-a" class="nav-link" data-scroll-target="#changes-in-columns-of-a"><span class="header-section-number">5.7</span> 4. Changes in columns of <span class="math inline">\(A\)</span></a>
+  <ul class="collapse">
+  <li><a href="#changes-in-a-nonbasic-column-of-a" id="toc-changes-in-a-nonbasic-column-of-a" class="nav-link" data-scroll-target="#changes-in-a-nonbasic-column-of-a"><span class="header-section-number">5.7.1</span> 4.1. Changes in a nonbasic column of <span class="math inline">\(A\)</span></a></li>
+  <li><a href="#example-5" id="toc-example-5" class="nav-link" data-scroll-target="#example-5"><span class="header-section-number">5.7.2</span> Example</a></li>
+  <li><a href="#changes-in-a-basic-column-of-a" id="toc-changes-in-a-basic-column-of-a" class="nav-link" data-scroll-target="#changes-in-a-basic-column-of-a"><span class="header-section-number">5.7.3</span> 4.2. Changes in a basic column of <span class="math inline">\(A\)</span></a></li>
+  </ul></li>
+  <li><a href="#addition-of-new-constraints-primal-or-dual-simplex-reoptimization-needed" id="toc-addition-of-new-constraints-primal-or-dual-simplex-reoptimization-needed" class="nav-link" data-scroll-target="#addition-of-new-constraints-primal-or-dual-simplex-reoptimization-needed"><span class="header-section-number">5.8</span> 5. Addition of new constraints (Primal or Dual Simplex reoptimization needed)</a>
+  <ul class="collapse">
+  <li><a href="#addition-of-a-new-inequality-constraint-i.e.-le-type-dual-simplex-reoptimization-needed" id="toc-addition-of-a-new-inequality-constraint-i.e.-le-type-dual-simplex-reoptimization-needed" class="nav-link" data-scroll-target="#addition-of-a-new-inequality-constraint-i.e.-le-type-dual-simplex-reoptimization-needed"><span class="header-section-number">5.8.1</span> 5.1. Addition of a new inequality constraint (i.e.&nbsp;<span class="math inline">\(\le\)</span> type) (Dual simplex reoptimization needed)</a></li>
+  <li><a href="#addition-of-a-new-equality-constraint-primal-simplex-reoptimization-needed" id="toc-addition-of-a-new-equality-constraint-primal-simplex-reoptimization-needed" class="nav-link" data-scroll-target="#addition-of-a-new-equality-constraint-primal-simplex-reoptimization-needed"><span class="header-section-number">5.8.2</span> 5.2. Addition of a new equality constraint (<em>Primal simplex reoptimization needed</em>)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">6</span> References</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Duality and sensitivity analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Prof: Victor Mario Noble Ramos, MSc. </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">Invalid Date</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="motivation-and-economic-interpretation" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Motivation and economic interpretation</h1>
+<section id="remembering-the-alloy-problem" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="remembering-the-alloy-problem"><span class="header-section-number">1.1</span> Remembering the alloy problem</h2>
+<p><strong>Let us remember the alloy problem:</strong></p>
+<p>A metallurgical plant produces two types of metallic alloys. Each alloy is composed of different proportions of copper, zinc and lead, which are available in limited quantities from stock. It is desired to determine how much to produce of each metallic alloy, in order to maximize the gross revenue, satisfying the following compositions of the alloys and the availability of raw materials in stock:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Raw material</th>
+<th>Alloy 1</th>
+<th>Alloy 2</th>
+<th>Stock</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Copper</td>
+<td>50%</td>
+<td>30%</td>
+<td>3 ton</td>
+</tr>
+<tr class="even">
+<td>Zinc</td>
+<td>10%</td>
+<td>20%</td>
+<td>1 ton</td>
+</tr>
+<tr class="odd">
+<td>Lead</td>
+<td>40%</td>
+<td>50%</td>
+<td>3 ton</td>
+</tr>
+<tr class="even">
+<td>Sale price (x1000 R$ per ton)</td>
+<td>3</td>
+<td>2</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Modeling this problem we get:</p>
+</section>
+<section id="the-alloy-problem-lp-model" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="the-alloy-problem-lp-model"><span class="header-section-number">1.2</span> The alloy problem LP model</h2>
+<p>Let <span class="math inline">\(x_i:=\)</span> the quantity of tons of alloy <span class="math inline">\(i\)</span> to be produced, <span class="math inline">\(i \in \{1,2\}\)</span>.</p>
+<p>FO:</p>
+<p><span class="math display">\[ \max F = 3x_1 + 2x_2 \]</span></p>
+<p>subject to: <span class="math display">\[ 0.5x_1 + 0.3x_2 \le 3\]</span> <span class="math display">\[0.1x_1 + 0.2x_2 \le 1\]</span> <span class="math display">\[0.4x_1 + 0.5x_2 \le 3\]</span> <span class="math display">\[x_1 \ge 0, x_2 \ge 0\]</span></p>
+<p>This model known as the natural model also is known as <strong><em>the primal model</em></strong>.</p>
+<p><strong>Exercise</strong>: Solve the alloy problem by using the simplex method.</p>
+</section>
+</section>
+<section id="the-dual-problem-and-its-economic-interpretation-of-duality" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> The dual problem and its economic interpretation of duality</h1>
+<p>Let us consider there is a friend company that is asking us to sell them the stocks of our raw materials. What are the minimum ‘fare’ prices for us to access to do the business?</p>
+<p>To achieve that we have to clarify what is the fare deal. So, we can define that the ‘fare’ prices must accomplish the following conditions:</p>
+<ul>
+<li><p>We have to make sure that the stocks sold produce the same income as if we used these raw materials to make the alloys.</p></li>
+<li><p>This mean, the total income must include the benefit of produce and sell the alloys.</p></li>
+<li><p>Prices have to be calculated according to the importance of the raw materials.</p></li>
+<li><p>The deal for our friend company is they will purchase all the stocks as a package, not individual ones.</p></li>
+</ul>
+<section id="the-dual-problem-model-formulation." class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="the-dual-problem-model-formulation."><span class="header-section-number">2.1</span> The dual problem: model formulation.</h2>
+<ul>
+<li><p>Let <span class="math inline">\(p_j\)</span> the ‘fare’ price per ton sold of the raw material <span class="math inline">\(j\)</span>, <span class="math inline">\(j \in \{\text{1(Copper), 2(Zinc), 3(Lead)}\}\)</span>.</p></li>
+<li><p>OF: <span class="math display">\[ \min \text{Total\_income}_{\text{(RM stocks selling)}} = \underbrace{3p_1}_{\text{Income for Copper sold stock}} + \underbrace{1p_2}_{\text{Income for Zinc sold stock}} + \underbrace{3p_3}_{\text{Income for Lead sold stock}} \]</span></p></li>
+<li><p>The firs constraint is related to ensure the income due to the first alloy as minimal income ($ 3mil per ton) (proporcionally). <span class="math display">\[\underbrace{0.5p_1}_{\text{Proportional income due to Copper use in alloy 1}} +\underbrace{0.1p_2}_{\text{Proportional income due to Zinc use in alloy 1}} +\underbrace{0.4p_3}_{\text{Proportional income due to Lead use in alloy 1}} \ge \underbrace{3}_{\text{Income per ton of alloy 1}}\]</span></p></li>
+<li><p>The second constraint is related to ensure the income due to the second alloy as minimal income ($2 mil per ton) (proporcionally). <span class="math display">\[\underbrace{0.3p_1}_{\text{Proportional income due to Copper use in alloy 2}} +\underbrace{0.2p_2}_{\text{Proportional income due to Zinc use in alloy 2}} +\underbrace{0.5p_3}_{\text{Proportional income due to Lead use in alloy 2}} \ge \underbrace{2}_{\text{Income per ton of alloy 2}} \]</span></p></li>
+<li><p>Last, we want all these prices be positive (or zero). <span class="math display">\[p_1\ge0, p_2\ge0, p_3\ge0\]</span></p></li>
+</ul>
+</section>
+<section id="the-complete-dual-model" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-complete-dual-model"><span class="header-section-number">2.2</span> The complete dual model</h2>
+<p><span class="math display">\[ \min \text{Total\_income}_{\text{(RM stocks selling)}} = 3p_1 + p_2 + 3p_3 \]</span></p>
+<p>Subject to: <span class="math display">\[0.5p_1 +0.1p_2 +0.4p_3 \ge 3\]</span> <span class="math display">\[0.3p_1 +0.2p_2 +0.5p_3 \ge 2 \]</span> <span class="math display">\[p_1\ge0, p_2\ge0, p_3\ge0\]</span></p>
+<p>This is called <strong>the dual model</strong>*.</p>
+<p>Exercise: solve the <strong>dual problem</strong>. Compare the solution with the <strong>primal problem</strong> solution.</p>
+</section>
+<section id="characteristics-of-the-pair-primal-dual" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="characteristics-of-the-pair-primal-dual"><span class="header-section-number">2.3</span> Characteristics of the pair primal-dual</h2>
+<ul>
+<li><p>The dual problem offers a complementary and/or alternative way of seeing the <em>primal</em> problem.</p></li>
+<li><p>It focuses on determine the value of the ‘resources’ due to their ‘shortage’ instead of the quantities of ‘final products’ that maximize some income.</p></li>
+<li><p>The obtention of the dual problem of the dual problem returns the primal problem again.</p></li>
+<li><p>There is just one dual problem for each primal and one primal for each dual.</p></li>
+<li><p>The global OF value of the optimal solution for both problems is the same value.</p></li>
+<li><p>The dual is another LP, it can be solved by the methods we already know.</p></li>
+<li><p>For the solution:</p>
+<ul>
+<li><p>If one problem (whatever) is unbounded, the other will be unfeasible.</p></li>
+<li><p>If one problem (whatever) is unfeasible, the other will be unfeasible or unbounded.</p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="the-primal-dual-table-conversion" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> The primal-dual table conversion</h1>
+<p>The dual problem of the primal problem is a conclusion that comes from the Lagrangean theory of optimization for linear models.</p>
+<p>It is possible to arrive to the dual from the primal just applying the Lagrangean theory of optimization. But memorizing this steps is not trivial. Fortunately for us there is a shorter path.</p>
+<p>Passing from the primal model to the dual model is easy with the following conversion table:</p>
+<p><em>Starting from a primal minimization problem:</em></p>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Primal min</th>
+<th></th>
+<th><span class="math inline">\(\implies\)</span></th>
+<th></th>
+<th>Dual max</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Primal variable</td>
+<td></td>
+<td>Dual constraint</td>
+<td></td>
+<td>Primal constraint</td>
+<td></td>
+<td>Dual variable</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\ge 0\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(\le\)</span></td>
+<td></td>
+<td><span class="math inline">\(\ge\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(\ge 0\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\le 0\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(\ge\)</span></td>
+<td></td>
+<td><span class="math inline">\(\le\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(\le 0\)</span></td>
+</tr>
+<tr class="even">
+<td>free</td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(=\)</span></td>
+<td></td>
+<td><span class="math inline">\(=\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td>free</td>
+</tr>
+</tbody>
+</table>
+<p><em>Starting from a primal maximization problem:</em></p>
+<table class="table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Primal max</th>
+<th></th>
+<th><span class="math inline">\(\implies\)</span></th>
+<th></th>
+<th>Dual min</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Primal variable</td>
+<td></td>
+<td>Dual constraint</td>
+<td></td>
+<td>Primal constraint</td>
+<td></td>
+<td>Dual variable</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\ge 0\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(\ge\)</span></td>
+<td></td>
+<td><span class="math inline">\(\ge\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(\le 0\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\le 0\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(\le\)</span></td>
+<td></td>
+<td><span class="math inline">\(\le\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(\ge 0\)</span></td>
+</tr>
+<tr class="even">
+<td>free</td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td><span class="math inline">\(=\)</span></td>
+<td></td>
+<td><span class="math inline">\(=\)</span></td>
+<td><span class="math inline">\(\implies\)</span></td>
+<td>free</td>
+</tr>
+</tbody>
+</table>
+<section id="excercise" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="excercise"><span class="header-section-number">3.1</span> Excercise:</h2>
+<p>Get the dual problem from the following primal problems:</p>
+<table class="table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 32%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>1. <span class="math display">\[ \max F = 3x_1 + 2x_2 \]</span></th>
+<th>2. <span class="math display">\[ \min F = 15x_1 + 12x_2 \]</span></th>
+<th>3. <span class="math display">\[ \min F = 5x_1 + 12x_2 + 4x_3 \]</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>subject to: <span class="math display">\[ 0.5x_1 + 0.3x_2 \le 3\]</span></td>
+<td>subject to: <span class="math display">\[ x_1 + 2x_2 \ge 3\]</span></td>
+<td><span class="math display">\[x_1 + 2x_2 + 3x_3 \le 10\]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[0.1x_1 + 0.2x_2 \le 1\]</span></td>
+<td><span class="math display">\[2x_1 - 4x_2 \le 5\]</span></td>
+<td><span class="math display">\[2x_1 - x_2 + 3x_3 = 8\]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[0.4x_1 + 0.5x_2 \le 3\]</span></td>
+<td><span class="math display">\[x1 \ge 0, x2 \ge 0\]</span></td>
+<td><span class="math display">\[x_1\ge0, x_2\ge0, x_3 \ge0\]</span></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[x1 \ge 0, x2 \ge 0\]</span></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<!-- ::: notes -->
+<!-- This is a speaker note. -->
+<!-- 1.  -->
+<!-- 2. $$\max G = 3p_1 + 5p_2$$  -->
+<!-- s.t.: $$p_1 + 2p_2 \le 15$$ -->
+<!-- $$2p_1 - 4p_2 \le 12$$ -->
+<!-- $$p_1 \ge 0, p_2 \le 0$$ -->
+<!-- ::: -->
+<!-- ![](tabela_primal_dual.png) -->
+</section>
+<section id="importance-of-the-duality" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="importance-of-the-duality"><span class="header-section-number">3.2</span> Importance of the duality</h2>
+<ol type="1">
+<li><p>Fundamental concept in optimization!</p></li>
+<li><p>It may be easier to solve the dual problem than the primal problem</p></li>
+<li><p>Another perspective for the simplex method (dual simplex)</p></li>
+<li><p>Economic interpretation</p></li>
+<li><p>Dual simplex</p></li>
+<li><p><strong><em>Sensitivity analysis</em></strong></p></li>
+</ol>
+</section>
+<section id="overview-of-the-duality-theory" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="overview-of-the-duality-theory"><span class="header-section-number">3.3</span> Overview of the duality theory</h2>
+<p>Dual theory is a result of the application of the Lagrange multiplier method to linear problems, often used in calculus to minimize a function subject to equality constraints.</p>
+<p>For example, consider:</p>
+<p><span class="math display">\[\min F(x,y) = x^2 +y^2\]</span> Subject to: <span class="math display">\[x + y = 1\]</span></p>
+<p>We can relax the problem by inserting the constraint into the OF with a penalty <span class="math inline">\(p\)</span> (This is a Lagrange’s multiplier): <span class="math display">\[\min L(x,y,p) = x^2+y^2 +p(1-x-y)\]</span> Considering a fixed p, we can determine the minimum of the function <span class="math inline">\(L\)</span>. By partially derivating L with respect to <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> and setting this derivatives to <span class="math inline">\(0\)</span>.</p>
+<p><span class="math display">\[\frac{\partial L}{\partial x} = 2x - p  = 0 \implies x=\frac{p}{2}\]</span> <span class="math display">\[\frac{\partial L}{\partial y} = 2y - p  = 0 \implies y=\frac{p}{2}\]</span></p>
+<p>The original constraint <span class="math inline">\(x+y=1\)</span> result in <span class="math inline">\(\frac{p}{2}+\frac{p}{2} = 1\)</span>, which means <span class="math inline">\(p=1\)</span>. And the optimal solution of <span class="math inline">\(F\)</span> is <span class="math inline">\(x=1/2\)</span>, <span class="math inline">\(y=1/2\)</span>.</p>
+<p>This procedure can be applied to LP problems. We add this penalties <span class="math inline">\(p_i\)</span>, one <span class="math inline">\(p\)</span> for each constraint and we can find the optimal values of this penalties by solving another LP problem called the <strong><em>Dual Problem</em></strong>.</p>
+</section>
+<section id="further-reading-on-the-duality-theory" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="further-reading-on-the-duality-theory"><span class="header-section-number">3.4</span> Further reading on the duality theory</h2>
+<p>For a deeper introduction, motivation and analytic view of the duality theory, please refer to the following readings:</p>
+<ul>
+<li><p>Chapter 4, Sections 4.1 and 4.2 (Bertsimas and Tsitsiklis, 1997).</p></li>
+<li><p>Section 2.10 (Arenales et al.&nbsp;2014). OBS: in this book <span class="math inline">\(p\equiv\lambda\)</span>.</p></li>
+</ul>
+</section>
+</section>
+<section id="an-overview-of-the-dual-simplex-method" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> An overview of the <em>Dual Simplex</em> method</h1>
+<p>It is a method that allow to solve the primal problem by using the duality theory. The version of the simplex seen until now is called the <strong><em>Primal Simplex</em></strong>.</p>
+<p>It starts from the Karush Kunh Tucker conditions and it is based on the primal simplex.</p>
+<p>In the primal simplex we start from <span class="math inline">\(x_{\mathcal{B}}\ge0\)</span> and we are worried to achieve <span class="math inline">\(s_{\mathcal{N}}\)</span> be <span class="math inline">\(\ge0\)</span> to get the optimal solution.</p>
+<ul>
+<li><p>We start from a <strong>feasible basic primal solution</strong>.</p></li>
+<li><p>We allow dual unfeasible solutions (<span class="math inline">\(s_{\mathcal{N}}&lt;0\)</span>) on the iterations.</p></li>
+<li><p>We <strong>stop</strong> when all <span class="math inline">\(s_{\mathcal{N}}\ge0\)</span>.</p></li>
+</ul>
+<p>For the dual simplex we start from <span class="math inline">\(s_j\ge0\)</span> and we want to ensure <span class="math inline">\(x_{\mathcal{B}}\ge0\)</span> to get the optimal solution.</p>
+<ul>
+<li><p>We start from a <strong>feasible basic dual solution</strong>.</p></li>
+<li><p>We allow dual unfeasible solutions (<span class="math inline">\(x_{\mathcal{B}}&lt;0\)</span>) on the iterations.</p></li>
+<li><p>We <strong>stop</strong> when all <span class="math inline">\(x_{\mathcal{B}}\ge0\)</span>.</p></li>
+</ul>
+<p><strong>Advantages of the dual simplex</strong></p>
+<ul>
+<li><p>It allows to start from an unfeasible primal solution.</p></li>
+<li><p>The initialization of the dual simplex method is easier than the primal simplex method.</p></li>
+<li><p>It allows to add new constraints* easily.</p></li>
+<li><p>While at any iteration of the primal simplex we can know just if the problem is un bounded, the dual offers us to know if the primal problem is unfeasible.</p></li>
+<li><p>It allows to detect unfeasibility in the problem: :-)</p></li>
+<li><p>Unconvenient*: it allows unfeasible primal solutions.</p></li>
+</ul>
+<section id="the-dual-simplex-algorithm" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="the-dual-simplex-algorithm"><span class="header-section-number">4.1</span> The dual simplex algorithm</h2>
+<p><strong><em>input</em></strong>: <span class="math inline">\(\mathcal{B}, \mathcal{N}\)</span> such as <span class="math inline">\(B= A_\mathcal{B}\)</span> is invertible and <span class="math inline">\(s_j = c_j - p^Ta_j\ge0 \quad \forall j \in \mathcal{N}\)</span> (*). If condition (*) is not satisfied we must initialize the method.</p>
+<ol type="1">
+<li><p>Calculate the basic solution: <span class="math inline">\(\bar{x}_{\mathcal{B}} = B^{-1}b\)</span></p></li>
+<li><p>Determine <span class="math inline">\(\bar{x}_{\mathcal{B}_l} = \min_{i \in \mathcal{B}}(\bar{x}_{\mathcal{B}_i})\)</span> (the most negative value)</p></li>
+<li><p>If <span class="math inline">\(\bar{x}_{\mathcal{B}_i}\ge0 \quad \forall i \in \mathcal{B}\)</span> then <strong>STOP</strong>, the optimal solution was found.</p></li>
+</ol>
+<p>Else, <span class="math inline">\(\bar{x}_{\mathcal{B}_l}\)</span> will leave the base.</p>
+<ol start="4" type="1">
+<li><p>Calculate the the basic dual solution: <span class="math inline">\(\bar{p}^T = c^T_{\mathcal{B}}B^{-1}\)</span>, <span class="math inline">\(s_j = c_j - p^Ta_j \quad \forall j \in \mathcal{N}\)</span></p></li>
+<li><p>Calculate <span class="math inline">\(\eta^T = [e]_lB^{-1}\)</span>, where <span class="math inline">\([e]_l\)</span> is the <span class="math inline">\(l\)</span>-th row of the identity matrix of size <span class="math inline">\(m\)</span>.</p></li>
+<li><p>If <span class="math inline">\(\eta^Ta_j\ge0 \forall j \in \mathcal{N}\)</span> then <strong>STOP</strong>, the problem is unfeasible <em>(This is because the dual problem is unbounded).</em></p></li>
+<li><p>Dual ratio test: <span class="math display">\[\frac{\bar{s}_k}{-\eta^Ta_k} = \min_{j \in \mathcal{N}}\big\{\frac{\bar{s}_j}{-\eta^Ta_j}|\eta^Ta_j&lt;0 \big\}\]</span>;</p></li>
+</ol>
+<p><span class="math inline">\(\bar{x}_k\)</span> will enter the base.</p>
+<ol start="8" type="1">
+<li>Update <span class="math inline">\(\mathcal{B}, \mathcal{N}\)</span> and get back to step 1.</li>
+</ol>
+</section>
+<section id="initialization" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="initialization"><span class="header-section-number">4.2</span> Initialization</h2>
+<p>For the dual problem to be feasible, the primal should be <strong>limited</strong>. So we should add a new dummy constraint to create an upper bound to all non-basic variables.</p>
+<p><span class="math display">\[\sum_{j \in \mathcal{N}}x_i\le M\]</span> Observe that by limiting the non-basic variables we limit the basic varibles as well.</p>
+<p>So the modified problem then remains:</p>
+<p><span class="math display">\[\min c^Tx\]</span> S.t.: <span class="math display">\[Ax=b\]</span> <span class="math display">\[\color{blue} {\sum_{j \in \mathcal{N}} x_i\le M}\]</span> <span class="math display">\[x\ge0\]</span></p>
+<p>When standardized, we have:</p>
+<p><span class="math display">\[\min c^Tx\]</span> S.t.: <span class="math display">\[Ax=b\]</span> <span class="math display">\[\sum_{j \in \mathcal{N}}x_i+x_{n+1} = M\]</span> <span class="math display">\[x, x_{n+1}\ge0\]</span></p>
+<p>Whose dual version is:</p>
+<p><span class="math display">\[\max b_1p_1 +\ldots+b_mp_m + Mp_{m+1}\]</span> S.t. <span class="math display">\[A^Tp + \mathbf{p}_{m+1} + s = c\]</span> <span class="math display">\[p_{m+1}\le0\]</span> <span class="math display">\[s\ge0\]</span> Transforming into the standard form, we have:</p>
+<p><span class="math display">\[\max b_1p_1 +\ldots+b_mp_m - Mp_{m+1}\]</span> S.t. <span class="math display">\[A^Tp - \mathbf{p}_{m+1} + s = c\]</span> <span class="math display">\[q, s\ge0\]</span> Now we can stablish a new base, which has the same size as <span class="math inline">\(\mathcal{B}\)</span> plus one (+1): <span class="math inline">\(|\tilde{\mathcal{B}}| = \mathcal{B}\)</span>.</p>
+<p>Observe that, in this new base, <span class="math inline">\(s_j = c_j - (p,p_{m+1})^T(a_j,1)\)</span>,, or, in general: <span class="math display">\[\tilde{S}^T = c^T_{\mathcal{N}} - \begin{bmatrix}p^T &amp; p_{m+1}\end{bmatrix}\begin{bmatrix}N \\ \mathbf{1}\end{bmatrix}\]</span> <span class="math display">\[\tilde{S}^T = c^T_{\mathcal{N}} - p^TN - p_{m+1}\]</span> <span class="math display">\[\tilde{S}^T = S^T - p_{m+1}\]</span> If we choose the most negative <span class="math inline">\(s_j\)</span> in <span class="math inline">\(S\)</span> (let us call it <span class="math inline">\(s_k\)</span>), anď we do <span class="math inline">\(p_{m+1} = s_k\)</span>, then all the <span class="math inline">\(s\)</span> in <span class="math inline">\(S\)</span> will become <span class="math inline">\(\ge 0\)</span>, as we desire.</p>
+<p>Then the initial base remains as: <span class="math display">\[\tilde{\mathcal{B}} = \mathcal{B}\cup k, \tilde{\mathcal{N}} = N\backslash k \cup \{n+1\}\]</span> Like that, the new base <span class="math inline">\(\tilde{\mathcal{B}},\tilde{\mathcal{N}}\)</span> makes the dual initial solution be feasible and we can start the dual simplex.</p>
+</section>
+<section id="example" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="example"><span class="header-section-number">4.3</span> Example</h2>
+<p>Solve via dual simplex: <span class="math display">\[\min f(x) = x_1 + 12x_2 − 3x_3 + 4x_4\]</span> s.a <span class="math display">\[x_1 + 3x_2 − 2x_3 − 2x_4 ≥ 2\]</span> <span class="math display">\[−x_1 + 2x2 − 3x3 + 3x4 ≥ 1\]</span> <span class="math display">\[x_1, . . . , x_4 ≥ 0\]</span></p>
+<p><strong>Solution</strong></p>
+<p>In the standard form: <span class="math display">\[\min f(x) = x_1 + 12x_2 − 3x_3 + 4x_4 +0x_5 +0x_6\]</span> s.a <span class="math display">\[x_1 + 3x_2 − 2x_3 − 2x_4 -x_5 \quad = 2\]</span> <span class="math display">\[−x_1 + 2x2 − 3x3 + 3x4 \quad -x_6 = 1\]</span> <span class="math display">\[x_1, . . . , x_6 ≥ 0\]</span> The obtained matrices are: <span class="math display">\[c^T = \begin{bmatrix}1&amp;12&amp;-3&amp;4&amp;0&amp;0\end{bmatrix}\]</span> <span class="math display">\[A= \begin{bmatrix}1&amp;3&amp;-2&amp;-2&amp;-1&amp;0\\-1&amp;2&amp;-3&amp;3&amp;0&amp;-1\end{bmatrix}, b =\begin{bmatrix}2\\1\end{bmatrix}\]</span></p>
+<p>Let us consider the base <span class="math inline">\(\mathcal{B} = \{4,5\}, \mathcal{N} = \{1,2,3,4\}\)</span>. This implies: <span class="math display">\[B = B^{-1} \begin{bmatrix}-1&amp;0\\0&amp;-1\end{bmatrix}\]</span> The basic solution is: <span class="math display">\[x_{\mathcal{B}} =B^{-1}b = \begin{bmatrix}-1&amp;0\\0&amp;-1\end{bmatrix}\begin{bmatrix}2\\1\end{bmatrix} = \begin{bmatrix}-2\\-1\end{bmatrix}\]</span> This base will not be possible in the primal simplex method, but is totally normal in the dual simplex.</p>
+<p><strong><em>NOTE</em></strong> In fact if <span class="math inline">\(x_{\mathcal{B}}\ge0\)</span> and the dual feasibility conditions were respected we would be in front of the optimal solution.</p>
+<p>Let us examine the dual feasibility conditions:</p>
+<p><span class="math display">\[S = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}1 &amp; 12 &amp; -3 &amp; 4\end{bmatrix} - \begin{bmatrix}0&amp;0\end{bmatrix}\begin{bmatrix}-1&amp;0\\0&amp;-1\end{bmatrix}\begin{bmatrix}1&amp;3&amp;-2&amp;-2\\-1&amp;2&amp;-3&amp;3\end{bmatrix}\]</span> <span class="math display">\[S = \begin{bmatrix}1 &amp; 12 &amp; -3 &amp; 4\end{bmatrix} - \begin{bmatrix}0&amp;0\end{bmatrix}\begin{bmatrix}1&amp;3&amp;-2&amp;-2\\-1&amp;2&amp;-3&amp;3\end{bmatrix}\]</span> <span class="math display">\[S = \begin{bmatrix}1 &amp; 12 &amp; -3 &amp; 4\end{bmatrix} - \begin{bmatrix}0&amp;0&amp;0&amp;0\end{bmatrix}\]</span> <span class="math display">\[S = \begin{bmatrix}1 &amp; 12 &amp; -3 &amp; 4\end{bmatrix}\]</span> We can see not all the reduced costs accomplish the dual feasibility conditions. By so, <strong>we cannot start the dual simplex</strong>.</p>
+<p>Now we have to initialize the dual simplex.</p>
+<p>We add the new constraint <span class="math inline">\(\sum_{j \in \mathcal{N}}x_i\le M\)</span>:</p>
+<p><span class="math display">\[\min f(x) = x_1 + 12x_2 − 3x_3 + 4x_4 +0x_5 +0x_6 + \color{blue}{0x_7}\]</span> s.a <span class="math display">\[x_1 + 3x_2 − 2x_3 − 2x_4 -x_5 \quad \quad= 2\]</span> <span class="math display">\[−x_1 + 2x2 − 3x3 + 3x4 \quad -x_6 \quad = 1\]</span> <span class="math display">\[\color{blue}{x_1 + x_2 + x_3 + x_4 + 0x_5 + 0x_6 +x_7 = M}\]</span> <span class="math display">\[x_1, . . . , x_6, \color{blue}{x_7} ≥ 0\]</span> As <span class="math inline">\(s_3\)</span> was the most negative, we can build the new base: <span class="math display">\[\tilde{\mathcal{B}} = \mathcal{B}\cup k, \tilde{\mathcal{N}} = N\backslash k \cup \{n+1\} \implies \tilde{\mathcal{B}} = \{5,6,{\color{blue} 3}\}, \tilde{\mathcal{N}} = \{1,2,4,{\color{blue} 7}\}\]</span></p>
+<p>With this base, we have:</p>
+<p><span class="math display">\[c^T = \begin{bmatrix}1&amp;12&amp;-3&amp;4&amp;0&amp;0&amp;\color{blue}0\end{bmatrix}\]</span> <span class="math display">\[A= \begin{bmatrix}1&amp;3&amp;-2&amp;-2&amp;-1&amp;0&amp;\color{blue}0\\-1&amp;2&amp;-3&amp;3&amp;0&amp;-1&amp;\color{blue}0\\1&amp;1&amp;1&amp;1&amp;0&amp;0&amp;\color{blue}1\end{bmatrix}, b =\begin{bmatrix}2\\1\\\color{blue}{100}\end{bmatrix}\]</span></p>
+<p>The basic solution is: <span class="math display">\[x_{\mathcal{B}} =B^{-1}b = \begin{bmatrix}-1&amp;0&amp;-2\\0&amp;-1&amp;-3\\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}2\\1\\100\end{bmatrix} = \begin{bmatrix}-202\\-301\\100\end{bmatrix}= \begin{bmatrix}x_5\\x_6\\x_3\end{bmatrix}\]</span></p>
+<p>Let us examine the dual feasibility conditions:</p>
+<p><span class="math display">\[S = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}1 &amp; 12 &amp; 4 &amp; 0\end{bmatrix} - \begin{bmatrix}0&amp;0&amp;-3\end{bmatrix}\begin{bmatrix}-1&amp;0&amp;-2\\0&amp;-1&amp;-3\\0&amp;0&amp;1\end{bmatrix}\begin{bmatrix}1&amp;3&amp;-2&amp;0\\-1&amp;2&amp;3&amp;0\\1&amp;1&amp;1&amp;1\end{bmatrix}\]</span> <span class="math display">\[S = \begin{bmatrix}1 &amp; 12 &amp; 4 &amp;0\end{bmatrix} - \begin{bmatrix}0&amp;0&amp;-3\end{bmatrix}\begin{bmatrix}1&amp;3&amp;-2&amp;0\\-1&amp;2&amp;3&amp;0\\1&amp;1&amp;1&amp;1\end{bmatrix}\]</span> <span class="math display">\[S = \begin{bmatrix}1 &amp; 12 &amp; 4 &amp;0\end{bmatrix} - \begin{bmatrix}-3&amp;-3&amp;-3&amp;-3\end{bmatrix}\]</span> <span class="math display">\[S = \begin{bmatrix}4 &amp; 15 &amp; 7 &amp; 3\end{bmatrix}\]</span> Note that all <span class="math inline">\(s_j\)</span> are positive. <strong><em>Now we can start the dual simplex</em></strong>.</p>
+</section>
+<section id="the-dual-simplex-algorithm-live-action" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="the-dual-simplex-algorithm-live-action"><span class="header-section-number">4.4</span> The dual simplex algorithm live action</h2>
+<p>Let us execute the Dual Simplex algorithm for the problem in question:</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dual Simplex iterations
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Iteration 1</strong></p>
+<p><span class="math display">\[\mathcal{B} = \{5,6,3\}, \mathcal{N} = \{1,2,4,7\}\]</span></p>
+<ol type="1">
+<li><p>Calculate basic solution: <span class="math inline">\(x_{\mathcal{B}} =B^{-1}b \implies x_{\mathcal{B}}^T = \begin{bmatrix}-202&amp;\color{red}{-301}&amp;100\end{bmatrix}\)</span></p></li>
+<li><p>Exit variable: <span class="math inline">\(\bar{x}_{\mathcal{B}_l} = \min_{i \in \mathcal{B}}(\bar{x}_{\mathcal{B}_i}) \implies x_6\)</span> will leave the base.</p></li>
+<li><p>We must continue, there are <span class="math inline">\(x_{\mathcal{B}_i} &lt; 0\)</span>.</p></li>
+<li><p>Dual solution: <span class="math inline">\(\bar{p}^T = c^T_{\mathcal{B}}B^{-1} = \begin{bmatrix}0&amp;0&amp;-3\end{bmatrix}\)</span>, <span class="math inline">\(s_j = c_j - p^Ta_j \quad \forall j \in \mathcal{N} = \begin{bmatrix}1&amp;12&amp;4&amp;0\end{bmatrix}\)</span></p></li>
+<li><p>Preparation for Dual MRT: <span class="math inline">\(\eta^T = [e]_lB^{-1} = \begin{bmatrix}0&amp;-1&amp;-3\end{bmatrix}\)</span></p></li>
+<li><p>We must continue, there are negative denominators, so the problem is not unfeasible.</p></li>
+<li><p>Dual MRT: <span class="math inline">\(\frac{\bar{s}_k}{-\eta^Ta_k} = \min_{j \in \mathcal{N}}\big\{\frac{\bar{s}_j}{-\eta^Ta_j}|\eta^Ta_j&lt;0 \big\} = \{2,3,1.1\bar6,\color{blue}1\} \implies x_7\)</span> will enter to the base.</p></li>
+<li><p>Base updating: <span class="math inline">\(\mathcal{B} = \{5,\color{blue}7,3\}, \mathcal{N} = \{1,2,4,\color{red}6\}\)</span></p></li>
+</ol>
+<p><strong>Iteration 2</strong></p>
+<p><span class="math display">\[\mathcal{B} = \{5,7,3\}, \mathcal{N} = \{1,2,4,6\}\]</span></p>
+<ol type="1">
+<li><p>Calculate basic solution: <span class="math inline">\(x_{\mathcal{B}} =B^{-1}b \implies x_{\mathcal{B}}^T = \begin{bmatrix}\color{red}{-1.\bar3}&amp;100.\bar3&amp;-0.\bar3\end{bmatrix}\)</span></p></li>
+<li><p>Exit variable: <span class="math inline">\(\bar{x}_{\mathcal{B}_l} = \min_{i \in \mathcal{B}}(\bar{x}_{\mathcal{B}_i}) \implies x_5\)</span> will leave the base.</p></li>
+<li><p>We must continue, there are <span class="math inline">\(x_{\mathcal{B}_i}&lt;0\)</span>.</p></li>
+<li><p>Dual solution: <span class="math inline">\(\bar{p}^T = c^T_{\mathcal{B}}B^{-1} = \begin{bmatrix}2&amp;1&amp;100\end{bmatrix}\)</span>, <span class="math inline">\(s_j = c_j - p^Ta_j \quad \forall j \in \mathcal{N} = \begin{bmatrix}2&amp;10&amp;1&amp;1\end{bmatrix}\)</span></p></li>
+<li><p>Preparation for Dual MRT: <span class="math inline">\(\eta^T = [e]_lB^{-1} = \begin{bmatrix}-1&amp;0.\bar6&amp;0\end{bmatrix}\)</span></p></li>
+<li><p>We must continue, there are negative denominators, so the problem is not unfeasible.</p></li>
+<li><p>Dual MRT: <span class="math inline">\(\frac{\bar{s}_k}{-\eta^Ta_k} = \min_{j \in \mathcal{N}}\big\{\frac{\bar{s}_j}{-\eta^Ta_j}|\eta^Ta_j&lt;0 \big\} = \{\color{blue}{1.2},6,\infty,1.5\} \implies x_1\)</span> will enter to the base.</p></li>
+<li><p>Base updating: <span class="math inline">\(\mathcal{B} = \{\color{blue}1,7,3\}, \mathcal{N} = \{\color{red}5,2,4,6\}\)</span></p></li>
+</ol>
+<p><strong>Iteration 3</strong></p>
+<p><span class="math display">\[\mathcal{B} = \{1,7,3\}, \mathcal{N} = \{5,2,4,6\}\]</span></p>
+<ol type="1">
+<li><p>Calculate basic solution: <span class="math inline">\(x_{\mathcal{B}} =B^{-1}b \implies x_{\mathcal{B}}^T = \begin{bmatrix}0.8&amp;99.8&amp;\color{red}{-0.6}\end{bmatrix}\)</span></p></li>
+<li><p>Exit variable: <span class="math inline">\(\bar{x}_{\mathcal{B}_l} = \min_{i \in \mathcal{B}}(\bar{x}_{\mathcal{B}_i}) \implies x_3\)</span> will leave the base.</p></li>
+<li><p>We must continue, there are <span class="math inline">\(x_{\mathcal{B}_i}&lt;0\)</span>.</p></li>
+<li><p>Dual solution: <span class="math inline">\(\bar{p}^T = c^T_{\mathcal{B}}B^{-1} = \begin{bmatrix}1.2&amp;0.2&amp;0\end{bmatrix}\)</span>, <span class="math inline">\(s_j = c_j - p^Ta_j \quad \forall j \in \mathcal{N} = \begin{bmatrix}1.2&amp;8&amp;5.8&amp;0.2\end{bmatrix}\)</span></p></li>
+<li><p>Preparation for Dual MRT: <span class="math inline">\(\eta^T = [e]_lB^{-1} = \begin{bmatrix}-0.2&amp;-0.2&amp;0\end{bmatrix}\)</span></p></li>
+<li><p>We must continue, there are negative denominators, so the problem is not unfeasible.</p></li>
+<li><p>Dual MRT: <span class="math inline">\(\frac{\bar{s}_k}{-\eta^Ta_k} = \min_{j \in \mathcal{N}}\big\{\frac{\bar{s}_j}{-\eta^Ta_j}|\eta^Ta_j&lt;0 \big\} = \{\infty,\color{blue}{8},29,\infty\} \implies x_2\)</span> will enter to the base.</p></li>
+<li><p>Base updating: <span class="math inline">\(\mathcal{B} = \{1,7,\color{blue}2\}, \mathcal{N} = \{5,\color{red}3,4,6\}\)</span></p></li>
+</ol>
+<p><strong>Iteration 4</strong></p>
+<p><span class="math display">\[\mathcal{B} = \{1,7,2\}, \mathcal{N} = \{5,3,4,6\}\]</span></p>
+<ol type="1">
+<li>Calculate basic solution: <span class="math inline">\(x_{\mathcal{B}} =B^{-1}b \implies x_{\mathcal{B}}^T = \begin{bmatrix}0.2&amp;99.2&amp;0.6\end{bmatrix}\)</span></li>
+</ol>
+<p>2 &amp; 3. We must stop, all <span class="math inline">\(x_{\mathcal{B}_i} \ge 0\)</span>. We have found the optimal solution.</p>
+</div>
+</div>
+</div>
+<p>The final solution is: <span class="math display">\[x = \begin{bmatrix}x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7\end{bmatrix} = \begin{bmatrix}0.2\\0.6\\0\\0\\0\\0\\99.2\end{bmatrix}\]</span></p>
+<p><strong><em>¿What is the meaning of</em></strong> <span class="math inline">\(x_7 = 99.8\)</span>?</p>
+</section>
+</section>
+<section id="sensitivity-analysis" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Sensitivity analysis</h1>
+<p>It consist of analyzing the information of the last iteration oƒ the simplex method to get a more complete answer about the <em>sensitivity</em> of the optimal solution.</p>
+<p>What if guide questions:</p>
+<ul>
+<li><p>What if one resource was changed?</p></li>
+<li><p>What if a cost was changed?</p></li>
+<li><p>What if a new variable was inserted?</p></li>
+<li><p>How big can be the changes in the parameters?</p></li>
+<li><p>What if a new constraint is added?*</p></li>
+</ul>
+<section id="aspects-to-have-into-account" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="aspects-to-have-into-account"><span class="header-section-number">5.1</span> Aspects to have into account</h2>
+<ul>
+<li><p>Sensitivity analysis has to be made by analyzing <strong>one change at a time</strong>.</p></li>
+<li><p>The main idea is not to solve the problem again.</p></li>
+<li><p>This is done by conservating the optimal conditions of the last iteration of the simplex method: <span class="math inline">\(\bar{x}_{\mathcal{B}}\ge0\)</span> and <span class="math inline">\(s_j\ge0 \quad \forall j \in \mathcal{N}\)</span>.</p></li>
+<li><p>To achieve that we must determine the <em>variation intervals</em> for each changed parameter.</p></li>
+</ul>
+</section>
+<section id="remember-the-simplex-method-important-terms" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="remember-the-simplex-method-important-terms"><span class="header-section-number">5.2</span> Remember the simplex method important terms</h2>
+<p><span class="math display">\[\bar{x}_{\mathcal{B}} = B^{-1}b\]</span> The <span class="math inline">\(\bar{x}_{\mathcal{B}}\)</span> must be <span class="math inline">\(\ge0\)</span>. This is known as the <strong><em>feasibility condition</em></strong>.</p>
+<p><span class="math display">\[p^T = c_{\mathcal{B}}^TB^{-1}\]</span></p>
+<p><span class="math display">\[s_j = c_j - p^Ta_j \quad \forall j \in \mathcal{N}\]</span> While the reduced costs <span class="math inline">\(s_j\)</span> must be <span class="math inline">\(\ge0\)</span> in the optimal solution. This is called the <strong><em>optimality condition</em></strong>.</p>
+</section>
+<section id="cases-for-sensitivity-analysis" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="cases-for-sensitivity-analysis"><span class="header-section-number">5.3</span> Cases for sensitivity analysis</h2>
+<p>It is possible to make the following categories of sensitivity analysis:</p>
+<ol type="1">
+<li><p>Changes in independent terms vector (resources vector) <span class="math inline">\(b\)</span></p></li>
+<li><p>Changes in OF coefficients (costs vector) <span class="math inline">\(c\)</span></p></li>
+</ol>
+<p>2.1. The changed cost is non-basic</p>
+<p>2.2. The changed cost is basic</p>
+<ol start="3" type="1">
+<li><p>Addition of a new variable</p></li>
+<li><p>Addition of new constraints</p></li>
+</ol>
+<p>4.1. Addition of a new inequality constraint</p>
+<p>4.2. Addition of a new equality constraint</p>
+<ol start="5" type="1">
+<li>Changes on technological coefficients</li>
+</ol>
+<p>5.1. Changes in a nonbasic column of <span class="math inline">\(A\)</span></p>
+<p>5.2. Changes in a basic column of <span class="math inline">\(A\)</span></p>
+</section>
+<section id="changes-in-independent-terms-vector-resources-vector-b" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="changes-in-independent-terms-vector-resources-vector-b"><span class="header-section-number">5.4</span> 1. Changes in independent terms vector (resources vector) <span class="math inline">\(b\)</span></h2>
+<ul>
+<li><p><strong><em>Guide questions:</em></strong></p>
+<ul>
+<li><p>What is the minimum amount of the <span class="math inline">\(i-\)</span>th resource to keep the current optimal solution?</p></li>
+<li><p>What is the maximum amount of the <span class="math inline">\(i-\)</span>th resource to keep the current optimal solution?</p></li>
+<li><p>How much does the solution and the OF change if the <span class="math inline">\(i-\)</span>th resource were modified in a <span class="math inline">\(\delta\)</span> quantity?</p></li>
+</ul></li>
+</ul>
+<p>Change in one ‘resource’ <span class="math inline">\(b_i\)</span> is studied.</p>
+<p><span class="math display">\[b' = \begin{bmatrix}b_1\\ \vdots \\ b_i +\delta \\ \vdots \\ b_m\end{bmatrix}\]</span> Changes in <span class="math inline">\(b\)</span> affect the basic solution (<span class="math inline">\(\bar{x}_{\mathcal{B}}\)</span>). Remember that the feasibility condition is <span class="math inline">\(\bar{x}_{\mathcal{B}}\ge0\)</span>.</p>
+<p>So, any change in <span class="math inline">\(b\)</span> must guarantee the solution to be <strong>feasible</strong>.</p>
+<p><span class="math display">\[x_{\mathcal{B}} = B^{-1}b'\ge0 \implies B^{-1}\begin{bmatrix}b_1\\ \vdots \\ b_i +\delta \\ \vdots \\ b_m\end{bmatrix} = B^{-1}\begin{bmatrix}b_1\\ \vdots \\ b_i \\ \vdots \\ b_m\end{bmatrix} + B^{-1}\begin{bmatrix}0\\ \vdots \\ \delta \\ \vdots \\ 0\end{bmatrix} = B^{-1}b + B^{-1}\begin{bmatrix}0\\ \vdots \\ \delta \\ \vdots \\ 0\end{bmatrix}\]</span></p>
+<p><span class="math display">\[ \implies B^{-1}b + B^{-1}\begin{bmatrix}0\\ \vdots \\ 1 \\ \vdots \\ 0\end{bmatrix}\delta = \bar{x}_{\mathcal{B}} + B^{-1}e_i\delta\ge 0\]</span></p>
+<p>So, the condition <span class="math inline">\(\bar{x}_{\mathcal{B}} + B^{-1}e_i\delta\ge 0\)</span> gives us an interval for the change <span class="math inline">\(\delta\)</span></p>
+<p>OBS: <span class="math inline">\(e_i\)</span> is the i-th column of the identity matrix with size <span class="math inline">\(m\times m\)</span>.</p>
+<section id="example-1" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="example-1"><span class="header-section-number">5.4.1</span> Example</h3>
+</section>
+</section>
+<section id="changes-in-of-coefficients-costs-vector-c" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="changes-in-of-coefficients-costs-vector-c"><span class="header-section-number">5.5</span> 2. Changes in OF coefficients (costs vector) <span class="math inline">\(c\)</span></h2>
+<p>Let us suppose a cost <span class="math inline">\(c_k\)</span> will be changed. There are 2 possibilities for this change:</p>
+<p>2.1. The changed cost is non-basic (<span class="math inline">\(k \in \mathcal{N}\)</span>)</p>
+<p>2.2. The changed cost is basic (<span class="math inline">\(k \in \mathcal{B}\)</span>)</p>
+<section id="the-changed-cost-is-non-basic-k-in-mathcaln" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="the-changed-cost-is-non-basic-k-in-mathcaln"><span class="header-section-number">5.5.1</span> 2.1. The changed cost is non-basic (<span class="math inline">\(k \in \mathcal{N}\)</span>)</h3>
+<ul>
+<li><p><strong><em>Guide questions:</em></strong></p>
+<ul>
+<li><p>What is the minimum cost of the <span class="math inline">\(k-\)</span>th item to be worth to be chosen? (minimization)</p></li>
+<li><p>What is the maximum income of the <span class="math inline">\(k-\)</span>th article to be worth to be produced? (maximization)</p></li>
+</ul></li>
+</ul>
+<p>In this case <span class="math inline">\(c_k\)</span> affects just to <span class="math inline">\(s_k\)</span> reduced cost since it is calculated as:</p>
+<p><span class="math display">\[s_k = c_k - p^Ta_k\]</span> We have to ensure that this costs is positive or zero to keep the optimal base unchanged.</p>
+<p>Let us consider the change <span class="math inline">\(c_k' = c_k +\delta_i\)</span> and the <span class="math inline">\(k-\)</span>th optimal reduced cost <span class="math inline">\(\bar{s}_k = c_k +p^Ta_k\)</span>. The new <span class="math inline">\(s_k'\)</span> is:</p>
+<p><span class="math display">\[s_k' = c_k' - p^Ta_k = (c_k +\delta_i) - p^Ta_k \]</span> <span class="math display">\[= c_k - p^Ta_k + \delta_i = (c_k - p^Ta_k) + \delta_i = \bar{s}_k + \delta_i\]</span></p>
+<p>As <span class="math inline">\(s_k'\)</span> must be <span class="math inline">\(\ge0\)</span>, the condition <span class="math inline">\(\bar{s}_k + \delta\ge 0\)</span> gives us an interval for the change <span class="math inline">\(\delta\)</span> to be valid.</p>
+</section>
+<section id="example-2" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="example-2"><span class="header-section-number">5.5.2</span> Example</h3>
+</section>
+<section id="the-changed-cost-is-basic-k-in-mathcalb" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="the-changed-cost-is-basic-k-in-mathcalb"><span class="header-section-number">5.5.3</span> 2.2. The changed cost is basic (<span class="math inline">\(k \in \mathcal{B}\)</span>)</h3>
+<ul>
+<li><p><strong><em>Guide questions:</em></strong></p>
+<ul>
+<li><p>What is the maximum cost of the <span class="math inline">\(k-\)</span>th article to still be worth to be produced? (minimization)</p></li>
+<li><p>What is the minimum income of the <span class="math inline">\(k-\)</span>th item to still be worth to be produced? (maximization)</p></li>
+</ul></li>
+</ul>
+<p>In this case <span class="math inline">\(c_k\)</span> affects <span class="math inline">\(p^T\)</span> and this change in <span class="math inline">\(p^T\)</span> affects all <span class="math inline">\(s_j \quad \forall j \in \mathcal{N}\)</span> since <span class="math inline">\(s_j\)</span> is calculated from <span class="math inline">\(p^T\)</span>.</p>
+<p>Let us consider the change <span class="math inline">\(c_k' = c_k +\delta\)</span>, the current <span class="math inline">\(p^T=c^T_{\mathcal{B}}B^{-1}\)</span> and <span class="math inline">\(s_j \quad \forall j \in \mathcal{N}\)</span>.</p>
+<p>The new <span class="math inline">\(c'_{\mathcal{B}} = \begin{bmatrix}c_{\mathcal{B_1}}\\ \vdots \\ c'_{k} \\ \vdots \\ c_{\mathcal{B_m}}\end{bmatrix}\)</span> <span class="math display">\[ = \begin{bmatrix}c_{\mathcal{B_1}}\\ \vdots \\ c_{k} +\delta \\ \vdots \\ c_{\mathcal{B_m}}\end{bmatrix} \implies c'^T_{\mathcal{B}} = \begin{bmatrix}c_{\mathcal{B_1}}&amp; \ldots &amp; c_{k} +\delta &amp; \ldots &amp; c_{\mathcal{B_m}}\end{bmatrix}\]</span> <span class="math display">\[ = \begin{bmatrix}c_{\mathcal{B_1}}&amp; \ldots &amp; c_{k} &amp; \ldots &amp; c_{\mathcal{B_m}}\end{bmatrix} + \begin{bmatrix}0 &amp; \ldots &amp; \delta &amp; \ldots &amp; 0\end{bmatrix} = c^T_{\mathcal{B}} + \begin{bmatrix}0 &amp; \ldots &amp; \delta &amp; \ldots &amp; 0\end{bmatrix}\]</span></p>
+<p>Update of <span class="math inline">\(p^T\)</span> (<span class="math inline">\(p'^T\)</span>): <span class="math display">\[p'^T = c'^T_{\mathcal{B}}B^{-1} = (c^T_{\mathcal{B}} + \begin{bmatrix}0 &amp; \ldots &amp; \delta &amp; \ldots &amp; 0\end{bmatrix})B^{-1} = c^T_{\mathcal{B}}B^{-1} + \begin{bmatrix}0 &amp; \ldots &amp; \delta &amp; \ldots &amp; 0\end{bmatrix}B^{-1}\]</span></p>
+<p>Let us examine the <span class="math inline">\(\begin{bmatrix}0 &amp; \ldots &amp; \delta &amp; \ldots &amp; 0\end{bmatrix}B^{-1}\)</span> part of the above expression.</p>
+<p><span class="math display">\[\begin{bmatrix}0 &amp; \ldots &amp; \delta &amp; \ldots &amp; 0\end{bmatrix}B^{-1} = \begin{bmatrix}0 &amp; \ldots &amp; \delta &amp; \ldots &amp; 0\end{bmatrix}
+\begin{bmatrix}
+\beta_{11} &amp; \beta_{12} &amp; \cdots &amp; \beta_{1m} \\
+\vdots     &amp; \vdots &amp; \ddots &amp; \vdots \\
+\beta_{l1} &amp; \beta_{l2} &amp; \cdots &amp; \beta_{lm} \\
+\vdots     &amp; \vdots &amp; \ddots &amp; \vdots \\
+\beta_{m1} &amp; \beta_{m2} &amp; \cdots &amp; \beta_{mm}\end{bmatrix}\]</span> <span class="math display">\[
+= \begin{bmatrix}
+0+\cdots+\delta\beta_{l1}+\cdots+0 &amp; 0+\cdots+\delta\beta_{l2}+\cdots+0 &amp; \ldots &amp; 0+\cdots+\delta\beta_{lm}+\cdots+0
+\end{bmatrix}\]</span></p>
+<p><span class="math display">\[
+= \begin{bmatrix}
+\delta\beta_{l1} &amp; \delta\beta_{l2} &amp; \cdots &amp; \delta\beta_{lm}
+\end{bmatrix} = \delta \begin{bmatrix}\beta_{l1} &amp; \beta_{l2} &amp; \cdots &amp; \beta_{lm}
+\end{bmatrix} = \delta[B^{-1}]_l\]</span></p>
+<p>By so, we have the simplex multiplier: <span class="math display">\[p'^T = c^T_{\mathcal{B}}B^{-1} + \begin{bmatrix}0 &amp; \ldots &amp; \delta &amp; \ldots &amp; 0\end{bmatrix}B^{-1}\]</span> <span class="math display">\[p'^T = p^T + \delta[B^{-1}]_l\]</span></p>
+<p>We are interested in keeping the optimal base unchanged. This means every <span class="math inline">\(s'_j \ge 0 \quad \forall j \in \mathcal{N}\)</span>.</p>
+<p><span class="math display">\[s'_j = c_j + p'^Ta_j\]</span> <span class="math display">\[s'_j = c_j + (p^T + \delta[B^{-1}]_l)a_j\]</span> <span class="math display">\[s'_j = \underbrace{c_j + p^Ta_j}_{\bar{s}_j} + \delta[B^{-1}]_la_j\]</span> <span class="math display">\[s'_j = \bar{s}_j + \delta[B^{-1}]_la_j\]</span></p>
+<p>As we need <span class="math inline">\(s'_j \ge 0\)</span>, the condition<span class="math inline">\(\bar{s}_j + \delta[B^{-1}]_la_j\ge 0\)</span> gives us an interval for the change <span class="math inline">\(\delta\)</span> to be valid.</p>
+</section>
+<section id="example-3" class="level3" data-number="5.5.4">
+<h3 data-number="5.5.4" class="anchored" data-anchor-id="example-3"><span class="header-section-number">5.5.4</span> Example</h3>
+</section>
+</section>
+<section id="addition-of-a-new-variable" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="addition-of-a-new-variable"><span class="header-section-number">5.6</span> 3. Addition of a new variable</h2>
+<ul>
+<li><p><strong><em>Guide questions:</em></strong></p>
+<ul>
+<li><p>What is the maximum cost of a new item <span class="math inline">\(j\)</span> to be included in the production plan? (minimization)</p></li>
+<li><p>What is the minimum sale price of a new product <span class="math inline">\(j\)</span> to be worth to be offered in the market mix? (maximization)</p></li>
+</ul></li>
+</ul>
+<p>To make this change we <strong>must</strong> know what are the technological coefficients of the new variable (<span class="math inline">\(x_j\)</span>) and we simply add them to the matrix <span class="math inline">\(A\)</span> as a new column (<span class="math inline">\(a_j\)</span>).</p>
+<p>We consider this variable as it were non-basic, this is, with value 0. So, its associated reduced cost <span class="math inline">\(s_j\)</span> is <span class="math inline">\(\ge0\)</span>.</p>
+<p>The sensitivity analysis will be based on what is the coefficient that the variable should have to be included in the base.</p>
+<p>This is, what is the minimum (maximum) coefficient <span class="math inline">\(c_j\)</span> for <span class="math inline">\(s_j\)</span> be <span class="math inline">\(&lt;0\)</span> and, consequently, the new variable <span class="math inline">\(x_j\)</span> to be included in the base?</p>
+<p><span class="math display">\[s_j = c_j -p^Ta_j&lt;0\]</span> <span class="math display">\[s_j &lt; 0 \implies c_j &lt; p^Ta_j\]</span>.</p>
+<p>This expression <span class="math inline">\(c_j &lt; p^Ta_j\)</span> gives us an upper (or lower) bound for the <span class="math inline">\(c_j\)</span> coefficient that implies the associated variable <span class="math inline">\(x_j\)</span> to be included in the base.</p>
+<p>To find the final optimal solution with this modification we have to make the update to the base and solve one last more simplex iteration.</p>
+<section id="example-4" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="example-4"><span class="header-section-number">5.6.1</span> Example</h3>
+</section>
+</section>
+<section id="changes-in-columns-of-a" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="changes-in-columns-of-a"><span class="header-section-number">5.7</span> 4. Changes in columns of <span class="math inline">\(A\)</span></h2>
+<p>We can also modify one (or some) of the coefficients of the technological matrix.</p>
+<ul>
+<li><p><strong><em>Guide questions:</em></strong></p>
+<ul>
+<li><p>What is the maximum contribution of nutrient <span class="math inline">\(j\)</span> for an ingredient <span class="math inline">\(i\)</span> that keeps that ingredient out of the optimal solution in the diet problem? (minimization)</p></li>
+<li><p>What is the maximum use of resource <span class="math inline">\(j\)</span> for a product <span class="math inline">\(i\)</span> that is allowed for the product to be still produced in the optimal production mix? (minimization or maximization)</p></li>
+</ul></li>
+</ul>
+<p>As a modification in the OF coefficients, a change of the technological coefficients can affect columns belonging or not to the base. By so, we can consider the following cases:</p>
+<p>4.1. Changes in a nonbasic column of <span class="math inline">\(A\)</span></p>
+<p>4.2. Changes in a basic column of <span class="math inline">\(A\)</span></p>
+<p>Depending on the case the feasibility and the optimality of the solution can be affected.</p>
+<section id="changes-in-a-nonbasic-column-of-a" class="level3" data-number="5.7.1">
+<h3 data-number="5.7.1" class="anchored" data-anchor-id="changes-in-a-nonbasic-column-of-a"><span class="header-section-number">5.7.1</span> 4.1. Changes in a nonbasic column of <span class="math inline">\(A\)</span></h3>
+<p>A change in some value <span class="math inline">\(a_{ij}\)</span> of a nonbasic column <span class="math inline">\(a_j\)</span> of the matrix <span class="math inline">\(A\)</span> affects just the optimality condition since the term <span class="math inline">\(\bar{x}_{\mathcal{B}} = B^{-1}b\)</span> is not affected. By so, we have to ensure the reduced cost associated to the affected column to be <span class="math inline">\(\ge0\)</span>.</p>
+<p>The change of <span class="math inline">\(a'_{ij} = a_{ij}+\delta\)</span> implies the change of the <span class="math inline">\(j-\)</span>th column (<span class="math inline">\(a_j\)</span>) of the matrix <span class="math inline">\(A\)</span>.</p>
+<p>This can be rewritten as: <span class="math display">\[a'_j = \begin{bmatrix}a_{1j}\\\vdots\\a'_{ij}\\\vdots\\a_{mj}\end{bmatrix} =
+\begin{bmatrix}a_{1j}\\\vdots\\a_{ij}\\\vdots\\a_{mj}\end{bmatrix} +
+\begin{bmatrix}0     \\\vdots\\\delta\\\vdots\\0\end{bmatrix} = a_j +\delta e_i\]</span></p>
+<p>The affection of the associated reduced cost will be:</p>
+<p><span class="math display">\[s'_j = c_j - p^Ta'_j = c_j - p^T(a_j +\delta e_i) \]</span> <span class="math display">\[= \underbrace{c_j - p^Ta_j}_{s_j} - p^T\delta e_i  = s_j - \delta p^Te_i = s_j -\delta p_i\]</span></p>
+<p>As we want <span class="math inline">\(s'_j\ge0\)</span> to keep the optimal base, the expression <span class="math inline">\(s_j -\delta p_i\ge0 \implies \delta\le \frac{s_j}{p_i}\)</span> provide us an upper bound for the change. Any change superior to this value would alter the base.</p>
+</section>
+<section id="example-5" class="level3" data-number="5.7.2">
+<h3 data-number="5.7.2" class="anchored" data-anchor-id="example-5"><span class="header-section-number">5.7.2</span> Example</h3>
+</section>
+<section id="changes-in-a-basic-column-of-a" class="level3" data-number="5.7.3">
+<h3 data-number="5.7.3" class="anchored" data-anchor-id="changes-in-a-basic-column-of-a"><span class="header-section-number">5.7.3</span> 4.2. Changes in a basic column of <span class="math inline">\(A\)</span></h3>
+<p>“If one of the entries of a basic column of <span class="math inline">\(A\)</span>, (<span class="math inline">\(a_j\)</span>) changes, then both the feasibility and optimality conditions are affected.” The development is more complicated for further reading review Chapter 5 and Exercises 5.2 and 5.3. (Bertsimas and Tsitsiklis, 1997)</p>
+</section>
+</section>
+<section id="addition-of-new-constraints-primal-or-dual-simplex-reoptimization-needed" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="addition-of-new-constraints-primal-or-dual-simplex-reoptimization-needed"><span class="header-section-number">5.8</span> 5. Addition of new constraints (Primal or Dual Simplex reoptimization needed)</h2>
+<p>Adding new constraints imply to modify the model and if we are solving the problem by using the primal simplex, it is necessary to solve the problem again.</p>
+<p>But if we are solving the problem by using the dual simplex, this is not necessary as we are just adding a new dual variable.</p>
+<p>There are 2 possibilities of new constraints addition:</p>
+<p>5.1. Addition of a new inequality constraint</p>
+<p>5.2. Addition of a new equality constraint</p>
+<section id="addition-of-a-new-inequality-constraint-i.e.-le-type-dual-simplex-reoptimization-needed" class="level3" data-number="5.8.1">
+<h3 data-number="5.8.1" class="anchored" data-anchor-id="addition-of-a-new-inequality-constraint-i.e.-le-type-dual-simplex-reoptimization-needed"><span class="header-section-number">5.8.1</span> 5.1. Addition of a new inequality constraint (i.e.&nbsp;<span class="math inline">\(\le\)</span> type) (Dual simplex reoptimization needed)</h3>
+<p>Let us consider the constraint <span class="math inline">\(\mathbf{a}_{m+1}x \le b_{m+1}\)</span>, after the standardization, we get <span class="math inline">\(\mathbf{a}_{m+1}x + 1s_{n+1} = b_{m+1}\)</span></p>
+<p>This modifies the primal problem as follows:</p>
+<p><span class="math display">\[\min \begin{bmatrix}c^T &amp; 0\end{bmatrix} \begin{bmatrix}x \\s_{n+1}\end{bmatrix}
+\]</span> <span class="math display">\[\text{s.t. } \begin{bmatrix}A &amp; \mathbf{0} \\ \mathbf{a}_{m+1} &amp; 1 \end{bmatrix} \begin{bmatrix}x \\ s_{n+1}  \end{bmatrix}\]</span> Considering the new slack <span class="math inline">\(s_{n+1}\)</span> as part of the base, the new basic and nonbasic matrices and the basic and nonbasic costs are:</p>
+<p><span class="math display">\[  B' = \begin{bmatrix}B &amp; \mathbf{0} \\ \mathbf{a'}_{\mathcal{B}} &amp; 1 \end{bmatrix}, N'=\begin{bmatrix}N \\ \mathbf{a'}_{\mathcal{N}}\end{bmatrix}, c'_{\mathcal{B}} = \begin{bmatrix}c_{\mathcal{B}}\\0\end{bmatrix}, c'_{\mathcal{N}} = c_{\mathcal{N}}\]</span> The inverse of this matrix is:</p>
+<p><span class="math display">\[  B'^{-1} = \begin{bmatrix}B^{-1} &amp; \mathbf{0} \\ -\mathbf{a'_{\mathcal{B}}}B^{-1} &amp; 1 \end{bmatrix}\]</span> In case of the feasibility criteria we could get an unfeasible solution (<span class="math inline">\(x_i&lt;0\)</span> for some <span class="math inline">\(i \in \mathcal{B}\)</span>)</p>
+<p>Analyzing the reduced costs (Matrix form) we have:</p>
+<p><span class="math display">\[s'^T_{\mathcal{N}} = c'^T_{\mathcal{N}} - p'^TN' = c'^T_{\mathcal{N}} -c'^T_{\mathcal{B}}B'^{-1}N'\]</span></p>
+<p><span class="math display">\[s'^T_{\mathcal{N}} = c^T_{\mathcal{N}} -\begin{bmatrix}c^T_{\mathcal{B}} &amp;0\end{bmatrix}\begin{bmatrix}B^{-1} &amp; \mathbf{0} \\ -\mathbf{a'_{\mathcal{B}}}B^{-1} &amp; 1 \end{bmatrix}\begin{bmatrix}N \\ \mathbf{a'_{\mathcal{N}}}\end{bmatrix}\]</span></p>
+<p><span class="math display">\[s'^T_{\mathcal{N}} = c^T_{\mathcal{N}} -\begin{bmatrix}c^T_{\mathcal{B}} &amp;0\end{bmatrix}\begin{bmatrix}B^{-1} &amp; \mathbf{0} \\ -\mathbf{a'_{\mathcal{B}}}B^{-1} &amp; 1 \end{bmatrix}\begin{bmatrix}N \\ \mathbf{a'_{\mathcal{N}}}\end{bmatrix}\]</span> <span class="math display">\[s'^T_{\mathcal{N}} = c^T_{\mathcal{N}} -\begin{bmatrix}c^T_{\mathcal{B}} &amp;0\end{bmatrix}\begin{bmatrix}B^{-1}N \\ -\mathbf{a'_{\mathcal{B}}}B^{-1}N + \mathbf{a'_{\mathcal{N}}}\end{bmatrix}\]</span></p>
+<p><span class="math display">\[s'^T_{\mathcal{N}} = c^T_{\mathcal{N}} - c^T_{\mathcal{B}}B^{-1}N = s^T_{\mathcal{N}}\]</span> Note that this reduced costs for the previous optimal base accomplish the dual feasibility (<span class="math inline">\(s_\mathcal{N}\ge0\)</span>). So we can use the dual simplex to resolve the problem from the last iteration of the original problem.</p>
+<p><strong><em>Homework</em></strong> show the new reduced costs are equivalent to the previous ones for the insertion of a new <span class="math inline">\(\ge\)</span>-type constraint. <em>The constraints of type</em> <span class="math inline">\(\ge\)</span> will have the same behavior as the above shown.</p>
+</section>
+<section id="addition-of-a-new-equality-constraint-primal-simplex-reoptimization-needed" class="level3" data-number="5.8.2">
+<h3 data-number="5.8.2" class="anchored" data-anchor-id="addition-of-a-new-equality-constraint-primal-simplex-reoptimization-needed"><span class="header-section-number">5.8.2</span> 5.2. Addition of a new equality constraint (<em>Primal simplex reoptimization needed</em>)</h3>
+<p>Let us consider the constraint <span class="math inline">\(\mathbf{a}_{m+1}x = b_{m+1}\)</span>, without lost of generality, we asume that the optimal solution to the original problem violates this new constraint, this is <span class="math inline">\(\mathbf{a}_{m+1}x^* &gt; b_{m+1}\)</span>.</p>
+<p>We can introduce an auxilary variable <span class="math inline">\(x_{n+1}\)</span> and modify the original problem:</p>
+<table class="table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Original</strong></th>
+<th><strong>Modified version</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math display">\[ \min F = c^Tx \]</span></td>
+<td><span class="math display">\[ \min F = c^Tx + Mx_{n+1}\]</span></td>
+</tr>
+<tr class="even">
+<td>subject to: <span class="math display">\[ Ax = b \]</span></td>
+<td>subject to: <span class="math display">\[ Ax = b\]</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math display">\[x \ge 0\]</span></td>
+<td><span class="math display">\[ \mathbf{a}_{m+1}x - x_{n+1} = b_{n+1} \]</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="math display">\[x \ge 0, x_{n+1} \ge 0\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>With this modification, considering <span class="math inline">\(x_{n+1} = \mathbf{a}_{m+1}x - b_{n+1}\)</span>, the solution <span class="math inline">\(\begin{bmatrix}x^*\\x_{n+1}\end{bmatrix}\)</span>, with base <span class="math inline">\(\mathcal{B'}=\mathcal{B}\cup \{n+1\}\)</span>, is a feasible primal solution to the modified problem and a feasible starting point to the primal simplex.</p>
+<p>By doing so, we can continue the reoptimization with the modified problem.</p>
+</section>
+</section>
+</section>
+<section id="references" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> References</h1>
+<ul>
+<li>Bertsimas, D., &amp; Tsitsiklis, J. N. (1997). Introduction to linear optimization (1st ed.). Athena Scientific and Dynamic Ideas, LLC.</li>
+<li>Arenales, M., Armentano, V. A., Morabito, R., &amp; Yanasse, H. H. (2014). Pesquisa Operacional para cursos de engenharia (2a Ed). Elsevier Editora Ltda.</li>
+<li>Munari, P., [Pedro Munari]. (2021, April 11). <em>Dual Simplex: Algoritmo e Inicialização - Programação linear, Otimização, Pesquisa Operacional</em> [Video]. Youtube. Retrieved June 18, 2023, from https://www.youtube.com/watch?v=-kaDHfCx6VI&amp;t=6s</li>
+<li>Munari, P., [Pedro Munari]. (2021, March 21). <em>Interpretação Econômica, Dualidade, Dual, Programação Linear, Otimização, Pesquisa Operacional</em> [Video]. Youtube. Retrieved June 18, 2023, from https://www.youtube.com/watch?v=HYKllgOuMzA&amp;t=258s</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
