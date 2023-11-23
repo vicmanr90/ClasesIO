@@ -1,6 +1,8 @@
-.v-center-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90%;
+.quarto-title-block .quarto-title-banner {
+  background-image: url(VMNRlogoCircle.png);
+  background-size: 250px;
+  background-position: right;
+  background-repeat: no-repeat;
+  padding-left: 10px;
+  background-origin: content-box;
 }
