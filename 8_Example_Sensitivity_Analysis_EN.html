@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Víctor Mario Noble Ramos, MSc">
+<meta name="dcterms.date" content="2023-12-18">
+
+<title>Sensitivity Analysis Examples</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="8_Example_Sensitivity_Analysis_EN_files/libs/clipboard/clipboard.min.js"></script>
+<script src="8_Example_Sensitivity_Analysis_EN_files/libs/quarto-html/quarto.js"></script>
+<script src="8_Example_Sensitivity_Analysis_EN_files/libs/quarto-html/popper.min.js"></script>
+<script src="8_Example_Sensitivity_Analysis_EN_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="8_Example_Sensitivity_Analysis_EN_files/libs/quarto-html/anchor.min.js"></script>
+<link href="8_Example_Sensitivity_Analysis_EN_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="8_Example_Sensitivity_Analysis_EN_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="8_Example_Sensitivity_Analysis_EN_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="8_Example_Sensitivity_Analysis_EN_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="8_Example_Sensitivity_Analysis_EN_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Sensitivity Analysis Examples</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Víctor Mario Noble Ramos, MSc </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 18, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#analyzing-the-optimal-solution" id="toc-analyzing-the-optimal-solution" class="nav-link" data-scroll-target="#analyzing-the-optimal-solution"><span class="header-section-number">1.1</span> Analyzing the optimal solution</a></li>
+  <li><a href="#going-a-little-further" id="toc-going-a-little-further" class="nav-link" data-scroll-target="#going-a-little-further"><span class="header-section-number">1.2</span> Going a little further</a></li>
+  <li><a href="#going-even-further" id="toc-going-even-further" class="nav-link" data-scroll-target="#going-even-further"><span class="header-section-number">1.3</span> Going even further</a></li>
+  <li><a href="#going-too-far" id="toc-going-too-far" class="nav-link" data-scroll-target="#going-too-far"><span class="header-section-number">1.4</span> Going too far</a></li>
+  </ul></li>
+  <li><a href="#excercises" id="toc-excercises" class="nav-link" data-scroll-target="#excercises"><span class="header-section-number">2</span> Excercises</a>
+  <ul class="collapse">
+  <li><a href="#excercise-1" id="toc-excercise-1" class="nav-link" data-scroll-target="#excercise-1"><span class="header-section-number">2.1</span> Excercise 1</a></li>
+  <li><a href="#excercise-2" id="toc-excercise-2" class="nav-link" data-scroll-target="#excercise-2"><span class="header-section-number">2.2</span> Excercise 2</a></li>
+  <li><a href="#excercise-3" id="toc-excercise-3" class="nav-link" data-scroll-target="#excercise-3"><span class="header-section-number">2.3</span> Excercise 3</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>Let us analyze againg the alloy problem, whose mathematical model is:</p>
+<p><span class="math display">\[ \max F = 3x_1 + 2x_2 \]</span></p>
+<p>subject to: <span class="math display">\[ 0.5x_1 + 0.3x_2 \le 3\]</span> <span class="math display">\[0.1x_1 + 0.2x_2 \le 1\]</span> <span class="math display">\[0.4x_1 + 0.5x_2 \le 3\]</span> <span class="math display">\[x_1 \ge 0, x_2 \ge 0\]</span></p>
+<p>Which is equivalent to the following (in matrix notation):</p>
+<p><span class="math display">\[ \min -F = \begin{bmatrix}-3 &amp; -2 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}\begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \end{bmatrix}\]</span></p>
+<p>subject to: <span class="math display">\[ \begin{bmatrix}0.5 &amp; 0.3 &amp; 1 &amp; 0 &amp; 0 \\ 0.1 &amp; 0.2 &amp; 0 &amp; 1 &amp; 0 \\ 0.4 &amp; 0.5 &amp; 0 &amp; 0 &amp; 1\end{bmatrix} \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \end{bmatrix} = \begin{bmatrix}3 \\ 1 \\ 3 \end{bmatrix}\]</span> <span class="math display">\[x \ge 0\]</span></p>
+<p>We can observe a trivial base: <span class="math inline">\(\mathcal{B} = \{3,4,5\}, \mathcal{N} = \{1,2\}\)</span>:</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Primal simplex
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Iteration 1</strong></p>
+<p><span class="math inline">\(\mathcal{B} = \{3,4,5\}, \mathcal{N} = \{1,2\}\)</span></p>
+<p><strong>1.</strong> Basic solution: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}3 &amp; 1 &amp; 3\end{bmatrix}\)</span></p>
+<p><strong>2.</strong> Multiplier vector: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 0 &amp; 0\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Reduced costs: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}\textcolor{blue}{-3} &amp; -2\end{bmatrix}\)</span></p>
+<p><strong>4. y 5.</strong> <span class="math inline">\(x_1\)</span> must enter into the base, and as there are negative values, we should continue.</p>
+<p><strong>6.</strong> MRT preparation: <span class="math inline">\(y^T = (B^{-1}a_1)^T = \begin{bmatrix}0.5 &amp; 0.1 &amp; 0.4 \end{bmatrix}\)</span></p>
+<p><strong>7.</strong> Minimum ratio test: <span class="math inline">\(MRT = \begin{Bmatrix}\textcolor{red}{6}, 10, 7.5\end{Bmatrix}\)</span></p>
+<p><strong>8. y 9.</strong> There are denominators <span class="math inline">\(&gt;0\)</span>, we must continue. The variable that leaves the base is <span class="math inline">\(x_3\)</span>. We update the base and continue.</p>
+<p><strong>Iteration 2</strong></p>
+<p><span class="math inline">\(\mathcal{B} = \{\textcolor{blue}{1},4,5\}, \mathcal{N} = \{\textcolor{red}{3},2\}\)</span></p>
+<p><strong>1.</strong> Basic solution: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}6 &amp; 0.4 &amp; 0.6\end{bmatrix}\)</span></p>
+<p><strong>2.</strong> Multiplier vector: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}-6 &amp; 0 &amp; 0\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Reduced costs: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}0 &amp; \color{blue}{-0.2}\end{bmatrix}\)</span></p>
+<p><strong>4. y 5.</strong> <span class="math inline">\(x_2\)</span> must enter into the base, and as there are negative values, we should continue.</p>
+<p><strong>6.</strong> MRT preparation: <span class="math inline">\(y^T = (B^{-1}a_2)^T = \begin{bmatrix}0.60 &amp; 0.14 &amp; 0.26 \end{bmatrix}\)</span></p>
+<p><strong>7.</strong> Minimum ratio test: <span class="math inline">\(MRT = \begin{Bmatrix}10, 2.86, \textcolor{red}{2.31} \end{Bmatrix}\)</span></p>
+<p><strong>8. y 9.</strong> There are denominators <span class="math inline">\(&gt;0\)</span>, we must continue. The variable that leaves the base is <span class="math inline">\(x_3\)</span>. We update the base and continue.</p>
+<p><strong>Iteration 3</strong></p>
+<p><span class="math inline">\(\mathcal{B} = \{1,4,\textcolor{blue}{3}\}, \mathcal{N} = \{3,\textcolor{red}{5}\}\)</span></p>
+<p><strong>1.</strong> Basic solution: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}4.62 &amp; 0.08 &amp; 2.31\end{bmatrix}\)</span></p>
+<p><strong>2.</strong> Multiplier vector: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}-5.38 &amp; 0 &amp; -0.77\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Reduced costs: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}5.38 &amp; 0.77\end{bmatrix}\)</span></p>
+<p><strong>4. y 5.</strong> There are no negative reduced costs, <span style="color:blue;">We must stop because we have reached the optimal.</span></p>
+</div>
+</div>
+</div>
+<p>Once the simplex has been terminated, we can resume the following informations from the last iteration:</p>
+<p><span class="math display">\[\mathcal{B} = \{1,4,2\}, \mathcal{N} = \{3,5\}\]</span></p>
+<p><span class="math display">\[ A = \begin{bmatrix} 0.5 &amp; 0.3 &amp; 1 &amp; 0 &amp; 0 \\ 0.1 &amp; 0.2 &amp; 0 &amp; 1 &amp; 0 \\ 0.4 &amp; 0.5 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}, b = \begin{bmatrix} 3 \\ 1 \\ 3 \end{bmatrix}, c = \begin{bmatrix} -3 \\ -2 \\ 0 \\ 0 \\ 0 \end{bmatrix} \]</span></p>
+<p><span class="math display">\[B^{-1} = \begin{bmatrix} 3.8461 &amp; 0 &amp; -2.3076 \\ 0.2308 &amp; 1 &amp; -0.54 \\-3.0769 &amp; 0 &amp; 3.8461 \end{bmatrix}\]</span></p>
+<p><span class="math display">\[  x = \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \end{bmatrix} = \begin{bmatrix}4.62 \\ 2.31 \\ 0 \\ 0.08 \\ 0 \end{bmatrix}, p = \begin{bmatrix}-5.38 \\ 0 \\ -0.77\end{bmatrix}, s = \begin{bmatrix}0 \\ 0 \\ 5.38 \\ 0 \\ 0.77\end{bmatrix}\]</span></p>
+<p>Based on this, we will analyze the following hypothetic situations:</p>
+<section id="analyzing-the-optimal-solution" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="analyzing-the-optimal-solution"><span class="header-section-number">1.1</span> Analyzing the optimal solution</h2>
+<ol type="1">
+<li><p>¿How much tons of alloy 1 have to be produced?</p></li>
+<li><p>¿How much tons of alloy 2 have to be produced?</p></li>
+<li><p>¿What is the maximum possible income with these produced quantities? ¿What is the percentual composition of the maximum income, in terms of the individual contribution from each type of alloy?</p></li>
+<li><p>¿How much Copper was used and how much was left?</p></li>
+<li><p>¿How much Zinc was used and how much was left?</p></li>
+<li><p>¿How much Lead was used and how much was left?</p></li>
+</ol>
+</section>
+<section id="going-a-little-further" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="going-a-little-further"><span class="header-section-number">1.2</span> Going a little further</h2>
+<ol type="1">
+<li><p>How much more additional Copper would make the current optimal solution no longer optimal?</p></li>
+<li><p>How much more additional Zinc would make the current optimal solution no longer optimal?</p></li>
+<li><p>How much additional Lead would make the current optimal solution no longer optimal?</p></li>
+<li><p>What is the minimum Copper that maintains the current optimal base?</p></li>
+<li><p>What is the minimum Zinc that maintains the current optimal base?</p></li>
+<li><p>What is the minimum Lead that maintains the current optimal base?</p></li>
+<li><p>By how much does the objective function change for each additional ton of Copper, if the stock were increased?</p></li>
+<li><p>By how much does the objective function change for each additional ton of Zinc, if the stock were increased?</p></li>
+<li><p>By how much does the objective function change for each additional ton of Lead, if the stock were increased?</p></li>
+</ol>
+</section>
+<section id="going-even-further" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="going-even-further"><span class="header-section-number">1.3</span> Going even further</h2>
+<ol type="1">
+<li><p>Suppose that the surplus Copper (If any) could be sold in the market at a price <span class="math inline">\(c_3\)</span>. What is the minimum price that should be placed on it to consider selling it separately?</p></li>
+<li><p>Suppose that the surplus Zinc (If any) could be sold in the market at a price <span class="math inline">\(c_4\)</span>. What is the minimum price that should be placed on it to consider selling it separately?</p></li>
+<li><p>Suppose that the excess Lead (If any) could be sold in the market at a price <span class="math inline">\(c_5\)</span>. What is the minimum price that should be placed on it to consider selling it separately?</p></li>
+<li><p>What is the minimum selling price for alloy 1 so that it is still worth producing?</p></li>
+<li><p>What is the minimum selling price for alloy 2 so that it is still worth producing?</p></li>
+</ol>
+</section>
+<section id="going-too-far" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="going-too-far"><span class="header-section-number">1.4</span> Going too far</h2>
+<ol type="1">
+<li><p>Consider that there is a third type of alloy that the metallurgical company is analyzing and that contains 0.2 ton of Copper, 0.3 ton of Zinc and 0.2 ton of Lead. What should be the minimum price of this third alloy so that it is at least considered for production?</p></li>
+<li><p>The company considers that the copper consumption of alloy 1 can be reduced by an amount <span class="math inline">\(\delta_{11}\)</span>. What should be the minimum and maximum reduction allowed, so that alloy 1 continues to be considered in the optimal solution?</p></li>
+<li><p>The company considers that the Lead expense of alloy 2 can be reduced by an amount <span class="math inline">\(\delta_{32}\)</span>. What should be the minimum and maximum reduction allowed, so that alloy 2 continues to be considered in the optimal solution?</p></li>
+</ol>
+</section>
+</section>
+<section id="excercises" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Excercises</h1>
+<section id="excercise-1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="excercise-1"><span class="header-section-number">2.1</span> Excercise 1</h2>
+<p>One of the products of the G. A. Tanner Company is a special type of toy that provides an estimated unit profit of $3. Due to high demand, management wants to increase its production rate from the current level of 1,000 per day. However, a limited supply of two subassemblies (A and B) makes this difficult. Each toy requires two type A subassemblies, but the supplier can only increase the delivery rate from the current 2,000 per day to a maximum of 3,000. Each toy requires only one type B subassembly, and the supplier will not be able to increase the delivery rate. delivers beyond the current level of 1500 per day. Since it does not have other suppliers, management plans to start a new internal production process to simultaneously manufacture an equal number of subassemblies of the two types to complete the deliveries from the two suppliers. It is estimated that the cost of producing a subassembly of each type will be $2.50 more than the purchase cost. Management wants to determine the production rate of the toy and that of each pair of subassemblies (one A and one B) that will maximize total profit. The following table summarizes the problem data.</p>
+<ol type="1">
+<li><p>Model and solve that problem using the primal simplex or dual simplex method.</p></li>
+<li><p>Using the information from the last iteration answer:</p>
+<p>to. What is the minimum and maximum price that the toy can have such that it is still worth producing?</p>
+<p>to. How many subassemblies of each type were used? What is the percentage composition of the objective function?</p>
+<ol start="2" type="a">
+<li><p>What is the minimum and maximum price of subassembly A that causes the optimal basis to hold?</p></li>
+<li><p>What is the minimum and maximum price of subassembly B that makes the optimal base hold?</p></li>
+<li><p>Suppose that management is considering launching a second type of toy that only needs one unit of subassembly B and does not need subassemblies of type A. What is the minimum price this new toy must have to be worth producing?</p></li>
+</ol></li>
+</ol>
+</section>
+<section id="excercise-2" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="excercise-2"><span class="header-section-number">2.2</span> Excercise 2</h2>
+<p>The company PatCalle SAS produces two types of reclining chairs for sale in the executive market. For production, two basic types of skilled labor are required: assembly and finishing. One unit of the <em>Luxury</em> recliner requires 2 hours of assembly, 1 hour of finishing and sells for a profit of 2.5 thousand USD. One unit of the <em>Excell-cutive</em> recliner requires 1 hour of assembly, 1/2 hour of finishing and sells for a profit of 1.5 thousand USD. Currently, the company has 120 hours of assembly and 85 hours of finishing.</p>
+<ol type="1">
+<li><p>Obtain the solution to this problem using the linear programming tools seen.</p></li>
+<li><p>How much of each resource was used? What are the maximum and minimum hours of assembly and finishing that maintain the production of both types of reclining chairs?</p></li>
+<li><p>The company is involved in labor negotiations regarding salary changes for next year. Provide the company with indications of the value of one hour of assembly labor time and one hour of finishing labor time.</p></li>
+<li><p>Perform analysis on the prices of each type of chair and establish the allowable variation intervals for the prices of each chair.</p></li>
+<li><p>Suppose you want to launch a third type of chair <em>Extra Pro Max Ultra</em>. This third type of chair would require 3 hours of assembly and 2 hours of finishing. What should be the minimum profit that would make the <em>Extra Pro Max Ultra</em> chair worth producing?</p></li>
+</ol>
+</section>
+<section id="excercise-3" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="excercise-3"><span class="header-section-number">2.3</span> Excercise 3</h2>
+<p>A farmer has 500 acres of land and wants to determine the area allocated to the following three crops: wheat, corn, and soybeans. The required labour-days, preparation cost, and profit per acre for the three crops are summarized below.</p>
+<p>Suppose that the maximum number of labour-days available is 5,000 and that the farmer has $80,000 for land preparation.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>CULTIVATION</th>
+<th>LABOUR-DAYS</th>
+<th>PREPARATION COST ($)</th>
+<th>PROFIT ($)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Wheat</strong></td>
+<td>6</td>
+<td>100</td>
+<td>60</td>
+</tr>
+<tr class="even">
+<td><strong>Corn</strong></td>
+<td>8</td>
+<td>150</td>
+<td>100</td>
+</tr>
+<tr class="odd">
+<td><strong>Soybeans</strong></td>
+<td>10</td>
+<td>120</td>
+<td>80</td>
+</tr>
+</tbody>
+</table>
+<ol type="1">
+<li><p>Find an optimal solution.</p></li>
+<li><p>Assuming an 8-hour workday, would it be profitable for the farmer to acquire additional help at $3 per hour? Why yes or why not?</p></li>
+<li><p>Suppose the farmer has contracted to deliver at least the equivalent of 120 acres of wheat. Use sensitivity analysis to find a new optimal solution.</p></li>
+<li><p>Suppose a very important customer has requested a rebate per acre of soybeans already grown and ready to harvest from the farmer. How much is the most the farmer could discount?</p></li>
+<li><p>The farmer’s wife has asked him to plant tomatoes, since she found out that there is a shortage of this product. Per acre, tomatoes require 7 man days of work and $150 in preparation costs. What should be the minimum profit that would be worth it to the farmer to listen to his wife?</p></li>
+<li><p>Suppose that due to a price increase the cost of preparing corn will increase by an amount <span class="math inline">\(\delta\)</span>. What is the maximum cost acceptable to the farmer to still produce it?</p></li>
+</ol>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
