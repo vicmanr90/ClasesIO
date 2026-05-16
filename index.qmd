@@ -1,0 +1,34 @@
+---
+title: "Investigación de Operaciones"
+author: "Victor Mario Noble Ramos, MSc."
+date: last-modified
+date-format: YYYY-MMM-DD
+format: 
+  html:
+    theme: flatly
+title-block-banner: true
+css: sty.css
+---
+# Micrositio: Tópicos de Investigación de Operaciones
+
+Bienvenidos a este micrositio, en el que iré publicando material sobre el curso de **Programación Lineal** y otros tópicos de la Investigación de Operaciones.
+
+# Tópicos de interés
+
+[➡️ Inicialización del simplex](6._Simplex_initialization\6_Inicializacion_del_Simplex.html)
+
+[➡️ Dualidad y análisis de sensibilidad](7._Duality_and_sensitivity/7_duality_sensitivity.html)
+
+[➡️ Ejemplos del análisis de sensibilidad](8._Sensitivity_Analysis\8_Example_Sensitivity_Analysis_EN.html)
+
+<!-- <a href="subdir/thefile.html">my link</a> -->
+
+<!-- # References -->
+
+<!-- -   Bertsimas, D., & Tsitsiklis, J. N. (1997). Introduction to linear -->
+<!--     optimization (1st ed.). Athena Scientific and Dynamic Ideas, LLC. -->
+<!-- -   Arenales, M., Armentano, V. A., Morabito, R., & Yanasse, H. H. -->
+<!--     (2014). Pesquisa Operacional para cursos de engenharia (2a Ed). -->
+<!--     Elsevier Editora Ltda. -->
+<!-- -   Taha, H. A. (2017). Operations research an introduction (Tenth edition). Pearson. -->
+<!-- -   Munari, P. (2021-2022). Pedro Munari. Canal de Youtube. Retrieved June 18, 2023, from [https://www.youtube.com/c/PedroMunari](https://www.youtube.com/c/PedroMunari) -->
