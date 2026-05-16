@@ -2,10 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Víctor Mario Noble Ramos, MSc">
+<meta name="dcterms.date" content="2026-05-15">
 
 <title>Inicialización del simplex</title>
 <style>
@@ -23,29 +25,85 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="20231116 Inicializacion del Simplex_files/libs/clipboard/clipboard.min.js"></script>
-<script src="20231116 Inicializacion del Simplex_files/libs/quarto-html/quarto.js"></script>
-<script src="20231116 Inicializacion del Simplex_files/libs/quarto-html/popper.min.js"></script>
-<script src="20231116 Inicializacion del Simplex_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="20231116 Inicializacion del Simplex_files/libs/quarto-html/anchor.min.js"></script>
-<link href="20231116 Inicializacion del Simplex_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="20231116 Inicializacion del Simplex_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="20231116 Inicializacion del Simplex_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="20231116 Inicializacion del Simplex_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="20231116 Inicializacion del Simplex_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="20231116_Inicializacion_del_Simplex_files/libs/clipboard/clipboard.min.js"></script>
+<script src="20231116_Inicializacion_del_Simplex_files/libs/quarto-html/quarto.js"></script>
+<script src="20231116_Inicializacion_del_Simplex_files/libs/quarto-html/popper.min.js"></script>
+<script src="20231116_Inicializacion_del_Simplex_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="20231116_Inicializacion_del_Simplex_files/libs/quarto-html/anchor.min.js"></script>
+<link href="20231116_Inicializacion_del_Simplex_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="20231116_Inicializacion_del_Simplex_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="20231116_Inicializacion_del_Simplex_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="20231116_Inicializacion_del_Simplex_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="20231116_Inicializacion_del_Simplex_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="20231116_Inicializacion_del_Simplex_files/libs/kePrint-0.0.1/kePrint.js"></script>
 
-<script src="20231116 Inicializacion del Simplex_files/libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="20231116 Inicializacion del Simplex_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="20231116_Inicializacion_del_Simplex_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="sty.css">
 </head>
 
 <body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Inicialización del simplex</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Víctor Mario Noble Ramos, MSc </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 15, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
   <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
@@ -80,28 +138,17 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">4.1</span> Ejercicios</a></li>
   <li><a href="#lecturas-complementarias" id="toc-lecturas-complementarias" class="nav-link" data-scroll-target="#lecturas-complementarias"><span class="header-section-number">4.2</span> Lecturas complementarias</a></li>
   </ul></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">5</span> Referencias</a></li>
   </ul>
 </nav>
 </div>
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Inicialización del simplex</h1>
-</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
 
-</header>
-
+<!-- # [→ 🛖](https://vicmanr90.github.io/ClasesIO/) (Start) {.unnumbered} -->
 <section id="motivaciones" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Motivaciones</h1>
 <section id="la-partición-trivial" class="level2" data-number="1.1">
@@ -155,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
 </div><div class="column" style="width:45%;">
 <p><strong>Modelo estandarizado:</strong> <span class="math display">\[\min z = c_1x_1+c_2x_2 + \ldots + c_nx_n + 0x_{n+1}^s + 0x_{n+2}^s + \ldots + 0x_{n+m}^s\]</span> S. a:</p>
 <p><span class="math display">\[\begin{matrix}a_{11}x_1 &amp; + &amp; a_{12}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{1n}x_n &amp; + x_{n+1}^s &amp;            &amp;        &amp;            &amp; = &amp; b_1 \\
-                a_{21}x_1 &amp; + &amp; a_{22}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{2n}x_n &amp;             &amp; -x_{n+2}^s &amp;        &amp;            &amp; = &amp; b_2 \\
+                a_{21}x_1 &amp; + &amp; a_{22}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{2n}x_n &amp;             &amp; -x_{n+2}^e &amp;        &amp;            &amp; = &amp; b_2 \\
                 \vdots    &amp; + &amp; \vdots     &amp; + &amp; \ddots &amp; + &amp; \vdots    &amp;             &amp;            &amp; \ddots &amp;            &amp; = &amp; \vdots \\
                 a_{m1}x_1 &amp; + &amp; a_{m2}x_2  &amp; + &amp; \ldots &amp; + &amp; a_{mn}x_n &amp;             &amp;            &amp;        &amp; +x_{n+m}^s &amp; = &amp; b_m \end{matrix}\]</span></p>
 </div>
@@ -178,7 +225,7 @@ ul.task-list li input[type="checkbox"] {
                     0     &amp; -1      &amp; \ldots &amp; 0 \\
                    \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
                    0      &amp; 0      &amp; \ldots &amp; 1 \end{bmatrix}\cdot \begin{bmatrix}b_1 \\ b_2 \\ \vdots \\
-                   b_m \end{bmatrix} =\begin{bmatrix} b_1 \\ \textcolor{red}{-b_2} \\ \vdots \\ b_m \end{bmatrix} \]</span> Observe que debido a la componente <span class="math inline">\(\textcolor{red}{-b_1}\)</span>, <span class="math inline">\(x_{\mathcal{B}} \ngeq 0\)</span>. Por lo tanto no podríamos inicializar el método simplex.</p>
+                   b_m \end{bmatrix} = \begin{bmatrix} b_1 \\ \textcolor{red}{-b_2} \\ \vdots \\ b_m \end{bmatrix} \]</span> Observe que debido a la componente <span class="math inline">\(\textcolor{red}{-b_1}\)</span>, <span class="math inline">\(x_{\mathcal{B}} \ngeq 0\)</span>. Por lo tanto no podríamos inicializar el método simplex.</p>
 </section>
 </section>
 <section id="las-soluciones-a-esta-dificultad" class="level2" data-number="1.2">
@@ -254,25 +301,25 @@ Desarrollo del simplex de la <strong>Fase 1</strong>
 <p><span class="math inline">\(\mathcal{B} = \{3,6,7\}, \mathcal{N} = \{1,2,4,5\}\)</span></p>
 <p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}20 &amp; 13 &amp; 50\end{bmatrix}\)</span></p>
 <p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 1 &amp; 1\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}-0.92 &amp; \textcolor{blue}{-1.6} &amp; 1 &amp; 1\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}-0.92 &amp; \textcolor{blue}{-1.6} &amp; 1 &amp; 1\end{bmatrix}\)</span></p>
 <p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_2\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
 <p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_2)^T = \begin{bmatrix}0.20 &amp; 0.65 &amp; 0.95 \end{bmatrix}\)</span></p>
 <p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}100, \textcolor{red}{20}, 52.63\end{Bmatrix}\)</span></p>
 <p><strong>8. y 9.</strong> Hay denominadores <span class="math inline">\(&gt;0\)</span>, se debe continuar. La variable saliente de la base es <span class="math inline">\(x_6^a\)</span>. Actualizamos la base y continuamos.</p>
 <p><strong>Iteración 2</strong></p>
 <p><span class="math inline">\(\mathcal{B} = \{3,\textcolor{blue}{2},7\}, \mathcal{N} = \{1,\textcolor{red}{6},4,5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}16 &amp; 20 &amp; 31\end{bmatrix}\)</span></p>
+<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}}  = B^{-1}b = \begin{bmatrix}16 &amp; 20 &amp; 31\end{bmatrix}\)</span></p>
 <p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; -1.4615 &amp; 1\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}-0.5508 &amp; 2.4615 &amp; \textcolor{blue}{-1.4615} &amp; 1\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}-0.5508 &amp; 2.4615 &amp; \textcolor{blue}{-1.4615} &amp; 1\end{bmatrix}\)</span></p>
 <p><strong>4. y 5.</strong> Debe entrar x_4 a la base, y dado que hay negativos, debemos continuar.</p>
 <p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_4)^T = \begin{bmatrix}0.30 &amp; -1.54 &amp; 1.46 \end{bmatrix}\)</span></p>
 <p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}52, \infty, \textcolor{red}{21.21}\end{Bmatrix}\)</span></p>
 <p><strong>8. y 9.</strong> Hay denominadores <span class="math inline">\(&gt;0\)</span>, se debe continuar. La variable saliente de la base es <span class="math inline">\(x_7^a\)</span>. Actualizamos la base y continuamos.</p>
 <p><strong>Iteración 3</strong></p>
 <p><span class="math inline">\(\mathcal{B} = \{3,2,\textcolor{blue}{4}\}, \mathcal{N} = \{1,6,\textcolor{red}{7},5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}9.47 &amp; 52.63 &amp; 21.21\end{bmatrix}\)</span></p>
+<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}}  = B^{-1}b = \begin{bmatrix}9.47 &amp; 52.63 &amp; 21.21\end{bmatrix}\)</span></p>
 <p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 0 &amp; 0\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}0 &amp; 1 &amp; 1 &amp; 0\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}0 &amp; 1 &amp; 1 &amp; 0\end{bmatrix}\)</span></p>
 <p><strong>4. y 5.</strong> No hay costos reducidos negativos, <span style="color:blue;">Se debe parar ya que hemos llegado al óptimo.</span></p>
 </div>
 </div>
@@ -304,7 +351,7 @@ Desarrollo del simplex de la <strong>Fase 2</strong>
 <p><span class="math inline">\(\mathcal{B} = \{3,2,4\}, \mathcal{N} = \{1,5\}\)</span></p>
 <p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}9.47 &amp; 52.63 &amp; 21.21\end{bmatrix}\)</span></p>
 <p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 0 &amp; 5.26\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}\textcolor{blue}{-1.05} &amp; 11.26\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}\textcolor{blue}{-1.05} &amp; 11.26\end{bmatrix}\)</span></p>
 <p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_1\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
 <p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_1)^T = \begin{bmatrix}0.28 &amp; 0.81 &amp; 0.38 \end{bmatrix}\)</span></p>
 <p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}\textcolor{red}{32.91}, 64.94, 56.28\end{Bmatrix}\)</span></p>
@@ -313,7 +360,7 @@ Desarrollo del simplex de la <strong>Fase 2</strong>
 <p><span class="math inline">\(\mathcal{B} = \{\textcolor{blue}{1},2,4\}, \mathcal{N} = \{\textcolor{red}{3},5\}\)</span></p>
 <p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}32.91 &amp; 25.96 &amp; 8.81\end{bmatrix}\)</span></p>
 <p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}-3.66 &amp; 0 &amp; 6.03\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}3.66 &amp; 12.03\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}3.66 &amp; 12.03\end{bmatrix}\)</span></p>
 <p><strong>4. y 5.</strong> No hay costos reducidos negativos, <span style="color:blue;">Se debe parar ya que hemos llegado al óptimo.</span></p>
 </div>
 </div>
@@ -336,7 +383,7 @@ Desarrollo del simplex de la <strong>Fase 2</strong>
 </section>
 <section id="ejemplo-de-aplicación" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="ejemplo-de-aplicación"><span class="header-section-number">3.2</span> Ejemplo de aplicación</h2>
-<p>Considere el problema anterior de la <a href="#sec-ejemplo">Sección&nbsp;2.2</a>. El modelo sin modificaciones se muestra a continuación. Se presenta junto con un recorderis de la notación final utilizada.</p>
+<p>Considere el problema anterior de la <a href="#sec-ejemplo" class="quarto-xref">Sección&nbsp;2.2</a>. El modelo sin modificaciones se muestra a continuación. Se presenta junto con un recorderis de la notación final utilizada.</p>
 <p>Sea:</p>
 <p><span class="math inline">\(x_1:=\)</span> Cantidad de kg de silo de maíz usado en la mezcla.</p>
 <p><span class="math inline">\(x_2:=\)</span> Cantidad de kg de melaza usada en la mezcla.</p>
@@ -367,16 +414,16 @@ Desarrollo del simplex <strong>Gran M</strong>
 <p><span class="math inline">\(\mathcal{B} = \{3,6,7\}, \mathcal{N} = \{1,2,4,5\}\)</span></p>
 <p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}20 &amp; 13 &amp; 50\end{bmatrix}\)</span></p>
 <p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 100 &amp; 100\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}-0.89 &amp; \textcolor{blue}{-155} &amp; 100 &amp; 106\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}-0.89 &amp; \textcolor{blue}{-155} &amp; 100 &amp; 106\end{bmatrix}\)</span></p>
 <p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_2\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
 <p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_2)^T = \begin{bmatrix}0.20 &amp; 0.65 &amp; 0.95 \end{bmatrix}\)</span></p>
 <p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}100, \textcolor{red}{20}, 52.63\end{Bmatrix}\)</span></p>
 <p><strong>8. y 9.</strong> Hay denominadores <span class="math inline">\(&gt;0\)</span>, se debe continuar. La variable saliente de la base es <span class="math inline">\(x_6^a\)</span>. Actualizamos la base y continuamos.</p>
 <p><strong>Iteración 2</strong></p>
 <p><span class="math inline">\(\mathcal{B} = \{3,\textcolor{blue}{2},7\}, \mathcal{N} = \{1,\textcolor{red}{6},4,5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}16 &amp; 20 &amp; 31\end{bmatrix}\)</span></p>
+<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}}  = B^{-1}b = \begin{bmatrix}16 &amp; 20 &amp; 31\end{bmatrix}\)</span></p>
 <p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; -138.46 &amp; 100\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}-53.23 &amp; 238.46 &amp; \textcolor{blue}{-138.46} &amp; 106\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}-53.23 &amp; 238.46 &amp; \textcolor{blue}{-138.46} &amp; 106\end{bmatrix}\)</span></p>
 <p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_4\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
 <p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_4)^T = \begin{bmatrix}0.31 &amp; -1.54 &amp; 1.46 \end{bmatrix}\)</span></p>
 <p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}52, \infty, \textcolor{red}{21.21}\end{Bmatrix}\)</span></p>
@@ -384,9 +431,9 @@ Desarrollo del simplex <strong>Gran M</strong>
 <p><strong>¡!</strong> <span style="color:red;"> <strong>OBS:</strong> </span> A partir de aquí podríamos continuar sin las variables artificiales <span class="math inline">\(x_6^a\)</span> y <span class="math inline">\(x_7^a\)</span>. Sin embargo, para efectos de este ejemplo continuaremos con ellas.</p>
 <p><strong>Iteración 3</strong></p>
 <p><span class="math inline">\(\mathcal{B} = \{3,2,\textcolor{blue}{4}\}, \mathcal{N} = \{1,6,\textcolor{red}{7},5\}\)</span></p>
-<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}9.47 &amp; 52.63 &amp; 21.21\end{bmatrix}\)</span></p>
+<p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}}  = B^{-1}b = \begin{bmatrix}9.47 &amp; 52.63 &amp; 21.21\end{bmatrix}\)</span></p>
 <p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}0 &amp; 0 &amp; 5.26\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}\textcolor{blue}{-1.05} &amp; 100 &amp; 94.74 &amp; 11.26\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}\textcolor{blue}{-1.05} &amp; 100 &amp; 94.74 &amp; 11.26\end{bmatrix}\)</span></p>
 <p><strong>4. y 5.</strong> Debe entrar <span class="math inline">\(x_1\)</span> a la base, y dado que hay negativos, debemos continuar.</p>
 <p><strong>6.</strong> Preparación para la MRT: <span class="math inline">\(y^T = (B^{-1}a_1)^T = \begin{bmatrix}0.28 &amp; 0.81 &amp; 0.38 \end{bmatrix}\)</span></p>
 <p><strong>7.</strong> Test de la razón mínima: <span class="math inline">\(MRT = \begin{Bmatrix}\textcolor{red}{32.91}, 64.94, 56.28\end{Bmatrix}\)</span></p>
@@ -395,7 +442,7 @@ Desarrollo del simplex <strong>Gran M</strong>
 <p><span class="math inline">\(\mathcal{B} = \{\textcolor{blue}{1},2,4\}, \mathcal{N} = \{\textcolor{red}{3},6,7,5\}\)</span></p>
 <p><strong>1.</strong> Solución básica: <span class="math inline">\(x^T_{\mathcal{B}} = B^{-1}b = \begin{bmatrix}32.91 &amp; 25.96 &amp; 8.81\end{bmatrix}\)</span></p>
 <p><strong>2.</strong> Vector multiplicador: <span class="math inline">\(p^T = c_{\mathcal{B}}^TB^{-1} = \begin{bmatrix}-3.66 &amp; 0 &amp; 6.03\end{bmatrix}\)</span></p>
-<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^Tb = \begin{bmatrix}3.66 &amp; 100 &amp; 93.97 &amp; 12.03\end{bmatrix}\)</span></p>
+<p><strong>3.</strong> Costos reducidos: <span class="math inline">\(s^T = c^T_{\mathcal{N}} - p^TN = \begin{bmatrix}3.66 &amp; 100 &amp; 93.97 &amp; 12.03\end{bmatrix}\)</span></p>
 <p><strong>4. y 5.</strong> No hay costos reducidos negativos, <span style="color:blue;">Se debe parar ya que hemos llegado al óptimo.</span></p>
 </div>
 </div>
@@ -433,7 +480,7 @@ Desarrollo del simplex <strong>Gran M</strong>
 <p>Una universidad ha sido premiada con un nuevo centro de cómputo de alto poder destinado a surtir labores de investigación. El centro de cómputo está compuesto de 3 salas que funcionan en paralelo. Los usuarios apartan su horario, alistan sus experimentos en la sala solicitada y se deja trabajar a los equipos. La universidad ha dispuesto que debe haber un auxiliar por sala durante el horario de atención.</p>
 <p>Los auxiliares son estudiantes de posgrado a los que se les reconoce un salario por hora que depende de su nivel de experiencia y habilidades informáticas. Este precio fue fijado por la Universidad en el estudio de las hojas de vida de los aspirantes a auxiliar. En la sala 2, hay equipos especiales que solo pueden manipular auxiliares que sean estudiantes de doctorado. En las otras dos salas puede haber tanto estudiantes de maestría como de doctorado.</p>
 <p>La tabla a continuación explica las disponibilidades de los diferentes estudiantes de maestría y doctorado así como el costo por hora para la universidad. Se trabaja una jornada continua de 7 horas de lunes a viernes. A cada auxiliar se le garantiza un mínimo de 8 horas semanales asignadas.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 15%">
 <col style="width: 9%">
@@ -516,8 +563,11 @@ Desarrollo del simplex <strong>Gran M</strong>
 <p>Hodor vive en el mundo de los espíritus y se prepara para embarcarse en un viaje que le permitirá desarrollar sus poderes al máximo. En el camino le esperan monstruos y retos que le exigirán tener buena salud, puntos de ataque, velocidad y defensa. Hodor puede embarcar ciertas sustancias que le permitirán potenciar algunos de estos aspectos o curarse en caso de heridas. Sin embargo la mochila de Hodor tiene ciertos límites de peso, volumen, valor monetario y karma.</p>
 <p>Aquí tienes la tabla de los objetos que Hodor puede llevar en su viaje:</p>
 <div class="cell" data-warnings="false">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.5.1</code></pre>
+</div>
 <div class="cell-output-display">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Datos sobre los objetos.</caption>
 <thead>
 <tr class="header">
@@ -614,7 +664,7 @@ Desarrollo del simplex <strong>Gran M</strong>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Atributos mejorados por los objetos y límites de existencia.</caption>
 <thead>
 <tr class="header">
@@ -735,6 +785,15 @@ Desarrollo del simplex <strong>Gran M</strong>
 <!-- (5) undefined. https://es.abcdef.wiki/wiki/Bland. -->
 </section>
 </section>
+<section id="referencias" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Referencias</h1>
+<ul>
+<li>Bertsimas, D., &amp; Tsitsiklis, J. N. (1997). Introduction to linear optimization (1st ed.). Athena Scientific and Dynamic Ideas, LLC.</li>
+<li>Arenales, M., Armentano, V. A., Morabito, R., &amp; Yanasse, H. H. (2014). Pesquisa Operacional para cursos de engenharia (2a Ed). Elsevier Editora Ltda.</li>
+<li>Munari, P., [Pedro Munari]. (2021, April 11). <em>Dual Simplex: Algoritmo e Inicialização - Programação linear, Otimização, Pesquisa Operacional</em> [Video]. Youtube. Retrieved June 18, 2023, from https://www.youtube.com/watch?v=-kaDHfCx6VI&amp;t=6s</li>
+<li>Munari, P., [Pedro Munari]. (2021, March 21). <em>Interpretação Econômica, Dualidade, Dual, Programação Linear, Otimização, Pesquisa Operacional</em> [Video]. Youtube. Retrieved June 18, 2023, from https://www.youtube.com/watch?v=HYKllgOuMzA&amp;t=258s</li>
+</ul>
+</section>
 
 </main>
 <!-- /main column -->
@@ -773,18 +832,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -816,11 +864,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -830,8 +917,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -843,7 +939,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -887,6 +1106,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -912,6 +1132,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -972,6 +1218,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
