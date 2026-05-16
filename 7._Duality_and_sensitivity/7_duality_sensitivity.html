@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,8 +35,35 @@ ul.task-list li input[type="checkbox"] {
 <link href="7_Duality_Sensitivity_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="7_Duality_Sensitivity_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -138,7 +165,9 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
+
 
 <section id="motivation-and-economic-interpretation" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Motivation and economic interpretation</h1>
@@ -146,7 +175,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="1.1" class="anchored" data-anchor-id="remembering-the-alloy-problem"><span class="header-section-number">1.1</span> Remembering the alloy problem</h2>
 <p><strong>Let us remember the alloy problem:</strong></p>
 <p>A metallurgical plant produces two types of metallic alloys. Each alloy is composed of different proportions of copper, zinc and lead, which are available in limited quantities from stock. It is desired to determine how much to produce of each metallic alloy, in order to maximize the gross revenue, satisfying the following compositions of the alloys and the availability of raw materials in stock:</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Raw material</th>
@@ -209,7 +238,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p>Let <span class="math inline">\(p_j\)</span> the ‘fare’ price per ton sold of the raw material <span class="math inline">\(j\)</span>, <span class="math inline">\(j \in \{\text{1(Copper), 2(Zinc), 3(Lead)}\}\)</span>.</p></li>
 <li><p>OF: <span class="math display">\[ \min \text{Total\_income}_{\text{(RM stocks selling)}} = \underbrace{3p_1}_{\text{Income for Copper sold stock}} + \underbrace{1p_2}_{\text{Income for Zinc sold stock}} + \underbrace{3p_3}_{\text{Income for Lead sold stock}} \]</span></p></li>
-<li><p>The firs constraint is related to ensure the income due to the first alloy as minimal income ($ 3mil per ton) (proporcionally). <span class="math display">\[\underbrace{0.5p_1}_{\text{Proportional income due to Copper use in alloy 1}} +\underbrace{0.1p_2}_{\text{Proportional income due to Zinc use in alloy 1}} +\underbrace{0.4p_3}_{\text{Proportional income due to Lead use in alloy 1}} \ge \underbrace{3}_{\text{Income per ton of alloy 1}}\]</span></p></li>
+<li><p>The first constraint is related to ensure the income due to the first alloy as minimal income ($ 3mil per ton) (proporcionally). <span class="math display">\[\underbrace{0.5p_1}_{\text{Proportional income due to Copper use in alloy 1}} +\underbrace{0.1p_2}_{\text{Proportional income due to Zinc use in alloy 1}} +\underbrace{0.4p_3}_{\text{Proportional income due to Lead use in alloy 1}} \ge \underbrace{3}_{\text{Income per ton of alloy 1}}\]</span></p></li>
 <li><p>The second constraint is related to ensure the income due to the second alloy as minimal income ($2 mil per ton) (proporcionally). <span class="math display">\[\underbrace{0.3p_1}_{\text{Proportional income due to Copper use in alloy 2}} +\underbrace{0.2p_2}_{\text{Proportional income due to Zinc use in alloy 2}} +\underbrace{0.5p_3}_{\text{Proportional income due to Lead use in alloy 2}} \ge \underbrace{2}_{\text{Income per ton of alloy 2}} \]</span></p></li>
 <li><p>Last, we want all these prices be positive (or zero). <span class="math display">\[p_1\ge0, p_2\ge0, p_3\ge0\]</span></p></li>
 </ul>
@@ -244,7 +273,7 @@ ul.task-list li input[type="checkbox"] {
 <p>It is possible to arrive to the dual from the primal just applying the Lagrangean theory of optimization. But memorizing this steps is not trivial. Fortunately for us there is a shorter path.</p>
 <p>Passing from the primal model to the dual model is easy with the following conversion table:</p>
 <p><em>Starting from a primal minimization problem:</em></p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
 <col style="width: 14%">
@@ -305,7 +334,7 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p><em>Starting from a primal maximization problem:</em></p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 14%">
 <col style="width: 14%">
@@ -368,7 +397,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="excercise" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="excercise"><span class="header-section-number">3.1</span> Excercise:</h2>
 <p>Get the dual problem from the following primal problems:</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 34%">
 <col style="width: 32%">
@@ -503,7 +532,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong><em>Note:</em></strong> <span class="math inline">\(\mathbf{p}_{m+1}\)</span> is a vector composed by the <span class="math inline">\(p_{m+1}\)</span> variable where the non-basic variables <span class="math inline">\(x_j\)</span> had presence and <span class="math inline">\(0\)</span> where they were not present.</p>
 <p>Now we can stablish a new base, which has the same size as <span class="math inline">\(\mathcal{B}\)</span> plus one (+1): <span class="math inline">\(|\tilde{\mathcal{B}}| = \mathcal{B}\)</span>.</p>
 <p>Observe that, in this new base, <span class="math inline">\(s_j = c_j - (p,p_{m+1})^T(a_j,1)\)</span>,, or, in general: <span class="math display">\[\tilde{S}^T = c^T_{\mathcal{N}} - \begin{bmatrix}p^T &amp; p_{m+1}\end{bmatrix}\begin{bmatrix}N \\ \mathbf{1}\end{bmatrix}\]</span> <span class="math display">\[\tilde{S}^T = c^T_{\mathcal{N}} - p^TN - p_{m+1}\]</span> <span class="math display">\[\tilde{S}^T = S^T - p_{m+1}\]</span> If we choose the most negative <span class="math inline">\(s_j\)</span> in <span class="math inline">\(S\)</span> (let us call it <span class="math inline">\(s_k\)</span>), anď we do <span class="math inline">\(p_{m+1} = s_k\)</span>, then all the <span class="math inline">\(s\)</span> in <span class="math inline">\(S\)</span> will become <span class="math inline">\(\ge 0\)</span>, as we desire.</p>
-<p>Then the initial base remains as: <span class="math display">\[\tilde{\mathcal{B}} = \mathcal{B}\cup k, \tilde{\mathcal{N}} = N\backslash k \cup \{n+1\}\]</span> Like that, the new base <span class="math inline">\(\tilde{\mathcal{B}},\tilde{\mathcal{N}}\)</span> makes the dual initial solution be feasible and we can start the dual simplex.</p>
+<p>Then the initial base remains as: <span class="math display">\[\tilde{\mathcal{B}} = \mathcal{B}\cup k, \tilde{\mathcal{N}} = \mathcal{N}\backslash k \cup \{n+1\}\]</span> Like that, the new base <span class="math inline">\(\tilde{\mathcal{B}},\tilde{\mathcal{N}}\)</span> makes the dual initial solution be feasible and we can start the dual simplex.</p>
 </section>
 <section id="example" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="example"><span class="header-section-number">4.3</span> Example</h2>
@@ -585,6 +614,23 @@ Dual Simplex iterations
 </div>
 <p>The final solution is: <span class="math display">\[x = \begin{bmatrix}x_1\\x_2\\x_3\\x_4\\x_5\\x_6\\x_7\end{bmatrix} = \begin{bmatrix}0.2\\0.6\\0\\0\\0\\0\\99.2\end{bmatrix}\]</span></p>
 <p><strong><em>¿What is the meaning of</em></strong> <span class="math inline">\(x_7 = 99.8\)</span>?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>Interpretation of the dummy variable value</strong></p>
+<p>The dummy variable <span class="math inline">\(x_7\)</span> was added to limit the non-basic variables. Remember the non-basic variables are <span class="math inline">\(x_1=x_2=x_3=x_4=0\)</span> initially. Note that after the solution of the problem, <span class="math inline">\(x_1=0.2\)</span> and <span class="math inline">\(x_2=0.6\)</span>, the sum of them is 0.8. As the value of <span class="math inline">\(x_7\)</span> is the amount of ‘slack’ to achieve the <span class="math inline">\(M\)</span> value, in the optimal solution we have <span class="math inline">\(x_7 = M - (x_1 + x_2 + x_3 + x_4) = M - 0.8\)</span>. So, <span class="math inline">\(x_7=99.2\)</span> is the rest of the <span class="math inline">\(M\)</span> value taken by the basic variables (that were inittially non-basic) after the optimal solution is found.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="sensitivity-analysis" class="level1" data-number="5">
@@ -795,7 +841,7 @@ Dual Simplex iterations
 <h3 data-number="5.8.2" class="anchored" data-anchor-id="addition-of-a-new-equality-constraint-primal-simplex-reoptimization-needed"><span class="header-section-number">5.8.2</span> 5.2. Addition of a new equality constraint (<em>Primal simplex reoptimization needed</em>)</h3>
 <p>Let us consider the constraint <span class="math inline">\(\mathbf{a}_{m+1}x = b_{m+1}\)</span>, without lost of generality, we asume that the optimal solution to the original problem violates this new constraint, this is <span class="math inline">\(\mathbf{a}_{m+1}x^* &gt; b_{m+1}\)</span>.</p>
 <p>We can introduce an auxilary variable <span class="math inline">\(x_{n+1}\)</span> and modify the original problem:</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 36%">
 <col style="width: 63%">
@@ -877,18 +923,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -920,11 +955,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -934,8 +1008,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -947,7 +1030,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -991,6 +1197,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1016,6 +1223,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1076,6 +1309,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
